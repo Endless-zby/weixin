@@ -15,6 +15,8 @@ import java.util.Map;
  * @author byzhao
  * @version 1.0
  * @date 2020/11/8 15:00
+ *
+ * 封装更适合本业务线的RestTemplate工具
  */
 @Configuration
 public class HttpUtiliy<T>{
@@ -39,7 +41,7 @@ public class HttpUtiliy<T>{
     }
 
     /**
-     * 增加url参数
+     *
      * @param URL
      * @param mediaType
      * @param body
