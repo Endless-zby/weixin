@@ -1,4 +1,4 @@
-package club.zby.weixin.controller.ControllerRobot;
+package club.zby.weixin.controller.controllerrobot;
 
 import club.zby.weixin.entity.ApiRespones;
 import club.zby.weixin.entity.RobotTemplate;
@@ -11,9 +11,15 @@ import org.springframework.web.bind.annotation.ResponseBody;
 import javax.annotation.Resource;
 import java.util.ArrayList;
 
+/**
+ * @author byzhao
+ * @version 1.0
+ * @date 2020/11/7 20:00
+ */
+
 @Controller
 @RequestMapping(value = "/webhook")
-public class robotController {
+public class RobotController {
 
     @Resource
     private RobotService robotService;

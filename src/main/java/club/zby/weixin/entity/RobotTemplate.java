@@ -3,6 +3,12 @@ package club.zby.weixin.entity;
 import lombok.Builder;
 import lombok.Data;
 
+/**
+ * @author byzhao
+ * @version 1.0
+ * @date 2020/11/7 21:00
+ */
+
 @Data
 @Builder
 public class RobotTemplate {

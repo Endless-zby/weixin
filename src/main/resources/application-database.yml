@@ -10,6 +10,7 @@ spring:
   redis:
     host: 120.26.42.162
     port: 9988
+    database: 0
 
   jpa:
     database-platform: org.hibernate.dialect.MySQL5InnoDBDialect

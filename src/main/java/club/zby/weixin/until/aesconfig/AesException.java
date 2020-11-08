@@ -21,27 +21,27 @@ public class AesException extends Exception {
     private static String getMessage(int code) {
 		switch (code) {
 		case ValidateSignatureError:
-			return "签名验证错误";
+			return "绛惧悕楠岃瘉閿欒";
 		case ParseXmlError:
-			return "xml解析失败";
+			return "xml瑙ｆ瀽澶辫触";
 		case ComputeSignatureError:
-			return "sha加密生成签名失败";
+			return "sha鍔犲瘑鐢熸垚绛惧悕澶辫触";
 		case IllegalAesKey:
-			return "SymmetricKey非法";
+			return "SymmetricKey闈炴硶";
 		case ValidateCorpidError:
-			return "corpid校验失败";
+			return "corpid鏍￠獙澶辫触";
 		case EncryptAESError:
-			return "aes加密失败";
+			return "aes鍔犲瘑澶辫触";
 		case DecryptAESError:
-			return "aes解密失败";
+			return "aes瑙ｅ瘑澶辫触";
 		case IllegalBuffer:
-			return "解密后得到的buffer非法";
+			return "瑙ｅ瘑鍚庡緱鍒扮殑buffer闈炴硶";
 //		case EncodeBase64Error:
-//			return "base64加密错误";
+//			return "base64鍔犲瘑閿欒";
 //		case DecodeBase64Error:
-//			return "base64解密错误";
+//			return "base64瑙ｅ瘑閿欒";
 //		case GenReturnXmlError:
-//			return "xml生成失败";
+//			return "xml鐢熸垚澶辫触";
 		default:
 			return null; // cannot be
 		}

@@ -23,3 +23,10 @@ POST_APPCHAT_SEND: https://qyapi.weixin.qq.com/cgi-bin/appchat/send?access_token
 
 # 群机器人 自动发布信息
 POST_WEBHOOK_SEND: https://qyapi.weixin.qq.com/cgi-bin/webhook/send?key=4db83b3c-359b-48e2-9b88-7bfff9a58e99
+
+# 菜单 创建菜单
+POST_MENU_CREATE: https://qyapi.weixin.qq.com/cgi-bin/menu/create?access_token={access_token}&agentid={agentid}
+
+#菜单获取菜单
+GET_MENU_GET: https://qyapi.weixin.qq.com/cgi-bin/menu/get?access_token={access_token}&agentid={agentid}
+

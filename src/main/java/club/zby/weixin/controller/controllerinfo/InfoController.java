@@ -1,6 +1,5 @@
-package club.zby.weixin.controller.ControllerInfo;
+package club.zby.weixin.controller.controllerinfo;
 
-import club.zby.weixin.entity.ApiRespones;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.data.redis.core.RedisTemplate;
 import org.springframework.stereotype.Controller;
@@ -11,9 +10,15 @@ import org.springframework.web.client.RestTemplate;
 
 import javax.annotation.Resource;
 
+/**
+ * @author byzhao
+ * @version 1.0
+ * @date 2020/11/7 21:00
+ */
+
 @Controller
 @RequestMapping(value = "/appchat")
-public class infoController {
+public class InfoController {
 
     @Resource
     private RestTemplate restTemplate;

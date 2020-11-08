@@ -13,6 +13,12 @@ import org.springframework.web.client.RestTemplate;
 import javax.annotation.Resource;
 import java.util.concurrent.TimeUnit;
 
+/**
+ * @author byzhao
+ * @version 1.0
+ * @date 2020/11/8 2:00
+ */
+
 @Service
 public class AccessTokenServiceImpl implements AccessTokenService {
 

@@ -3,8 +3,13 @@ package club.zby.weixin.entity;
 import lombok.Data;
 
 /**
+ * @author byzhao
+ * @version 1.0
+ * @date 2020/11/8 11:00
+ *
  * 用于企业微信回调
  */
+
 @Data
 public class WXVerifyIn {
 

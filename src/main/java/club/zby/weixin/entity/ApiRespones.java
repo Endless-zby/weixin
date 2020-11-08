@@ -4,6 +4,13 @@ import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.NoArgsConstructor;
 
+/**
+ * @author byzhao
+ * @version 1.0
+ * @date 2020/11/7 20:00
+ *
+ * 构建统一的返回
+ */
 @Data
 @AllArgsConstructor
 @NoArgsConstructor
@@ -49,7 +56,7 @@ public class ApiRespones {
     }
 
     public Boolean isSuccess(){
-        return this.errcode == OK;
+        return this.errcode != null &&  this.errcode == OK;
     }
 
 }

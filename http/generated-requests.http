@@ -1,10 +1,14 @@
 ### 企业微信回调
 GET http://{{baseUrl}}/weixin/getToken?msg_signature=ASDFQWEXZCVAQFASDFASDFSS&timestamp=13500001234&nonce=123412323&echostr=ENCRYPT_STR
 
-
 ### 获取AccessToken
 GET http://{{baseUrl}}/weixin/getAccessToken
 
-
-###
+### 机器人发送消息
 GET http://{{baseUrl}}/webhook/send
+
+### 获取应用菜单
+GET http://{{baseUrl}}/menu/get
+
+### 创建菜单
+POST http://{{baseUrl}}/menu/create
