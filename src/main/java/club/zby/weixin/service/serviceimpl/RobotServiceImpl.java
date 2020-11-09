@@ -2,6 +2,7 @@ package club.zby.weixin.service.serviceimpl;
 
 import club.zby.weixin.entity.ApiRespones;
 import club.zby.weixin.entity.RobotTemplate;
+import club.zby.weixin.entity.UrlTemplateEnum;
 import club.zby.weixin.service.RobotService;
 import com.alibaba.fastjson.JSON;
 import org.springframework.beans.factory.annotation.Value;
@@ -27,8 +28,7 @@ public class RobotServiceImpl implements RobotService {
 
     @Resource
     private RestTemplate restTemplate;
-    @Value("${POST_WEBHOOK_SEND}")
-    private String POST_WEBHOOK_SEND; //机器人
+
 
 
     @Override
@@ -46,7 +46,7 @@ public class RobotServiceImpl implements RobotService {
         HttpHeaders httpHeaders = new HttpHeaders();
         httpHeaders.setContentType(MediaType.APPLICATION_JSON_UTF8);
         HttpEntity<String> entity = new HttpEntity<>(JSON.toJSONString(variable), httpHeaders);
-        ResponseEntity<ApiRespones> apiResult = restTemplate.postForEntity(POST_WEBHOOK_SEND, entity, ApiRespones.class);
+        ResponseEntity<ApiRespones> apiResult = restTemplate.postForEntity(UrlTemplateEnum.POST_WEBHOOK_SEND.getUrl(), entity, ApiRespones.class);
         if(apiResult.getStatusCode().is2xxSuccessful()){
             return apiResult.getBody();
         }
