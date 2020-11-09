@@ -1,23 +1,20 @@
 package club.zby.weixin.controller.controllerreceive;
 
 import club.zby.weixin.entity.WXVerifyIn;
+import club.zby.weixin.entity.receivemessages.ReceiveText;
 import club.zby.weixin.until.aesconfig.AesException;
 import club.zby.weixin.until.aesconfig.WXBizMsgCrypt;
 import com.alibaba.fastjson.JSON;
-import com.alibaba.fastjson.JSONPObject;
 import org.apache.commons.io.IOUtils;
-import org.hibernate.internal.util.xml.XmlDocument;
-import org.hibernate.internal.util.xml.XmlDocumentImpl;
+import org.json.JSONObject;
+import org.json.XML;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.http.MediaType;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.*;
-import org.w3c.dom.Document;
 
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
-import javax.xml.parsers.DocumentBuilder;
-import javax.xml.parsers.DocumentBuilderFactory;
 import java.io.InputStream;
 import java.io.UnsupportedEncodingException;
 
@@ -98,11 +95,12 @@ public class ReceiveController {
             //得到主动推送消息
             String postData = IOUtils.toString(inputStream, "UTF-8");
             String result = wxcpt.DecryptMsg(wxVerifyIn, postData);
-            
 
-            // 验证URL成功，将sEchoStr返回
-            System.out.println(result);
-            return result;
+            Object xml = XML.toJSONObject(result).get("xml");
+            String s = xml.toString();
+            ReceiveText receiveText = JSON.parseObject(s, ReceiveText.class);
+
+            return receiveText.getMsgType();
         } catch (Exception e) {
             //验证URL失败，错误原因请查看异常
             e.printStackTrace();
