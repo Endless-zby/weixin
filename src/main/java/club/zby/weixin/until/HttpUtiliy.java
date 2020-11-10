@@ -66,9 +66,7 @@ public class HttpUtiliy<T>{
      * @return
      */
     public ResponseEntity<T> postForEntity(String URL, MediaType mediaType, Map<String,Object> body,Class<T> responseType){
-        HttpHeaders httpHeaders = new HttpHeaders();
-        httpHeaders.setContentType(mediaType);
-        HttpEntity<String> entity = new HttpEntity<>(JSON.toJSONString(body), httpHeaders);
+        HttpEntity<String> entity = getEntity(mediaType, JSON.toJSONString(body));
         return restTemplate.postForEntity(URL, entity, responseType);
     }
 
@@ -82,9 +80,7 @@ public class HttpUtiliy<T>{
      * @return
      */
     public ResponseEntity<T> postForEntity(String URL, MediaType mediaType, Map<String,Object> body,Class<T> responseType,Map<String, ?> uriVariables){
-        HttpHeaders httpHeaders = new HttpHeaders();
-        httpHeaders.setContentType(mediaType);
-        HttpEntity<String> entity = new HttpEntity<>(JSON.toJSONString(body), httpHeaders);
+        HttpEntity<String> entity = getEntity(mediaType, JSON.toJSONString(body));
         return restTemplate.postForEntity(URL, entity, responseType,uriVariables);
     }
 
@@ -97,9 +93,7 @@ public class HttpUtiliy<T>{
      * @return
      */
     public ResponseEntity<T> postForEntity(String URL, MediaType mediaType, String body,Class<T> responseType){
-        HttpHeaders httpHeaders = new HttpHeaders();
-        httpHeaders.setContentType(mediaType);
-        HttpEntity<String> entity = new HttpEntity<>(body, httpHeaders);
+        HttpEntity<String> entity = getEntity(mediaType, body);
         return restTemplate.postForEntity(URL, entity, responseType);
     }
 
@@ -113,10 +107,22 @@ public class HttpUtiliy<T>{
      * @return
      */
     public ResponseEntity<T> postForEntity(String URL, MediaType mediaType, String body,Class<T> responseType,Map<String, ?> uriVariables){
-        HttpHeaders httpHeaders = new HttpHeaders();
-        httpHeaders.setContentType(mediaType);
-        HttpEntity<String> entity = new HttpEntity<>(body, httpHeaders);
+        HttpEntity<String> entity = getEntity(mediaType, body);
         return restTemplate.postForEntity(URL, entity, responseType,uriVariables);
     }
+
+
+    /**
+     *
+     * @param mediaType
+     * @param body
+     * @return
+     */
+    public HttpEntity<String> getEntity(MediaType mediaType,String body){
+        HttpHeaders httpHeaders = new HttpHeaders();
+        httpHeaders.setContentType(mediaType);
+        return new HttpEntity<>(body, httpHeaders);
+    }
+
 
 }

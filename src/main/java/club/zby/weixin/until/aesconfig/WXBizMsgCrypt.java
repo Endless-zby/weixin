@@ -1,6 +1,6 @@
 /**
  * 对企业微信发送给企业后台的消息加解密示例代码.
- * 
+ *
  * @copyright Copyright (c) 1998-2014 Tencent Inc.
  */
 
@@ -15,6 +15,7 @@ package club.zby.weixin.until.aesconfig;
 
 import club.zby.weixin.entity.WXVerifyIn;
 import org.apache.tomcat.util.codec.binary.Base64;
+import org.springframework.context.annotation.Configuration;
 
 import java.nio.charset.Charset;
 import java.util.Arrays;
@@ -40,6 +41,7 @@ import javax.crypto.spec.SecretKeySpec;
  * 	<li>如果安装了JDK，将两个jar文件放到%JDK_HOME%\jre\lib\security目录下覆盖原来文件</li>
  * </ol>
  */
+
 public class WXBizMsgCrypt {
 	static Charset CHARSET = Charset.forName("utf-8");
 	Base64 base64 = new Base64();
@@ -102,7 +104,7 @@ public class WXBizMsgCrypt {
 
 	/**
 	 * 对明文进行加密.
-	 * 
+	 *
 	 * @param text 需要加密的明文
 	 * @return 加密后base64编码的字符串
 	 * @throws AesException aes加密失败
@@ -149,7 +151,7 @@ public class WXBizMsgCrypt {
 
 	/**
 	 * 对密文进行解密.
-	 * 
+	 *
 	 * @param text 需要解密的密文
 	 * @return 解密得到的明文
 	 * @throws AesException aes解密失败
@@ -206,11 +208,11 @@ public class WXBizMsgCrypt {
 	 * 	<li>生成安全签名</li>
 	 * 	<li>将消息密文和安全签名打包成xml格式</li>
 	 * </ol>
-	 * 
+	 *
 	 * @param replyMsg 企业微信待回复用户的消息，xml格式的字符串
 	 * @param timeStamp 时间戳，可以自己生成，也可以用URL参数的timestamp
 	 * @param nonce 随机串，可以自己生成，也可以用URL参数的nonce
-	 * 
+	 *
 	 * @return 加密后的可以直接回复用户的密文，包括msg_signature, timestamp, nonce, encrypt的xml格式的字符串
 	 * @throws AesException 执行失败，请查看该异常的错误码和具体的错误信息
 	 */
@@ -238,12 +240,12 @@ public class WXBizMsgCrypt {
 	 * 	<li>若验证通过，则提取xml中的加密消息</li>
 	 * 	<li>对消息进行解密</li>
 	 * </ol>
-	 * 
+	 *
 	 * @param msgSignature 签名串，对应URL参数的msg_signature
 	 * @param timeStamp 时间戳，对应URL参数的timestamp
 	 * @param nonce 随机串，对应URL参数的nonce
 	 * @param postData 密文，对应POST请求的数据
-	 * 
+	 *
 	 * @return 解密后的原文
 	 * @throws AesException 执行失败，请查看该异常的错误码和具体的错误信息
 	 */
@@ -298,7 +300,7 @@ public class WXBizMsgCrypt {
 	 * @param timeStamp 时间戳，对应URL参数的timestamp
 	 * @param nonce 随机串，对应URL参数的nonce
 	 * @param echoStr 随机串，对应URL参数的echostr
-	 * 
+	 *
 	 * @return 解密之后的echostr
 	 * @throws AesException 执行失败，请查看该异常的错误码和具体的错误信息
 	 */

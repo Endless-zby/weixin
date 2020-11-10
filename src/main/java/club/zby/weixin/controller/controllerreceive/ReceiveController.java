@@ -1,11 +1,16 @@
 package club.zby.weixin.controller.controllerreceive;
 
+import club.zby.weixin.entity.ApiRespones;
 import club.zby.weixin.entity.WXVerifyIn;
 import club.zby.weixin.entity.receivemessages.ReceiveText;
+import club.zby.weixin.factory.ReceiveFactory;
+import club.zby.weixin.service.ReceiveService;
 import club.zby.weixin.until.aesconfig.AesException;
 import club.zby.weixin.until.aesconfig.WXBizMsgCrypt;
 import com.alibaba.fastjson.JSON;
+import com.sun.xml.internal.bind.v2.runtime.XMLSerializer;
 import org.apache.commons.io.IOUtils;
+import org.apache.commons.lang3.StringUtils;
 import org.json.JSONObject;
 import org.json.XML;
 import org.springframework.beans.factory.annotation.Value;
@@ -13,6 +18,7 @@ import org.springframework.http.MediaType;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.*;
 
+import javax.annotation.Resource;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import java.io.InputStream;
@@ -37,6 +43,8 @@ public class ReceiveController {
     private String sEncodingAESKey;
     @Value("${corpid}")
     private String sCorpID; //企业ID
+    @Resource
+    private ReceiveFactory receiveFactory;
 
     /**
      * 回调验证配置
@@ -70,43 +78,30 @@ public class ReceiveController {
     }
 
     /**
-     * 回调验证配置  接收事件消息
-     * @param wxVerifyIn
+     * 回调验证配置  接收事件消息  回复消息
+     * @param request
      * @return
-     * @throws AesException
      */
     @ResponseBody
     @PostMapping(value = "/receive",consumes = MediaType.TEXT_XML_VALUE)
-    public String receivePost(WXVerifyIn wxVerifyIn, HttpServletRequest request, HttpServletResponse response) throws AesException, UnsupportedEncodingException {
-
-        request.setCharacterEncoding("UTF-8");
-        response.setCharacterEncoding("UTF-8");
-
-        /**
-         * 1.对msg_signature进行校验
-         * 2.解密Encrypt，得到明文的消息结构体（消息结构体后面章节会详说）
-         * 3.如果需要被动回复消息，构造被动响应包
-         * 4.正确响应本次请求
-         */
-
+    public String receivePost(HttpServletRequest request) throws AesException {
         WXBizMsgCrypt wxcpt = new WXBizMsgCrypt(sToken, sEncodingAESKey, sCorpID);
-        try {
-            InputStream inputStream = request.getInputStream();
-            //得到主动推送消息
-            String postData = IOUtils.toString(inputStream, "UTF-8");
-            String result = wxcpt.DecryptMsg(wxVerifyIn, postData);
-
-            Object xml = XML.toJSONObject(result).get("xml");
-            String s = xml.toString();
-            ReceiveText receiveText = JSON.parseObject(s, ReceiveText.class);
-
-            return receiveText.getMsgType();
-        } catch (Exception e) {
-            //验证URL失败，错误原因请查看异常
-            e.printStackTrace();
-            return null;
+        String receive = (String)request.getAttribute("receive");
+        String type = (String)request.getAttribute("type");
+        ReceiveService receiveFactory = this.receiveFactory.getReceiveFactory(type);
+        String msg = "<xml>\n" +
+                "   <ToUserName><![CDATA[ZhaoBoYa]]></ToUserName>\n" +
+                "   <FromUserName><![CDATA[ww8783f3dbd5f49266]]></FromUserName> \n" +
+                "   <CreateTime>1348831860</CreateTime>\n" +
+                "   <MsgType><![CDATA[text]]></MsgType>\n" +
+                "   <Content><![CDATA[成功]]></Content>\n" +
+                "</xml>";
+        if(receiveFactory == null){
+            msg = "不支持此消息类型";
         }
-
+        String s = receiveFactory.replyXmlInfo(receive);
+        String result = wxcpt.EncryptMsg(msg, "1111", "111");
+        return result;
     }
 
 }

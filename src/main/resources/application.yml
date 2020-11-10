@@ -1,6 +1,6 @@
 spring.profiles.include: database,weixin
 server:
-  port: 10000
+  port: 10001
 
 spring:
   application:
@@ -10,11 +10,5 @@ spring:
     multipart:
       max-file-size: 10MB
 
-  freemarker:
-    content-type: text/html
-    #后缀名
-    suffix: .ftl
-    template-loader-path: classpath:/templates
-    charset: UTF-8
-    check-template-location: true
+
 

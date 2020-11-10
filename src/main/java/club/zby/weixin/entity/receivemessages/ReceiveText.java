@@ -1,10 +1,13 @@
 package club.zby.weixin.entity.receivemessages;
 
+import com.fasterxml.jackson.annotation.JsonProperty;
 import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.NoArgsConstructor;
+import lombok.ToString;
 
 import javax.xml.bind.annotation.XmlRootElement;
+import java.io.Serializable;
 
 /**
  * @author byzhao
@@ -14,35 +17,15 @@ import javax.xml.bind.annotation.XmlRootElement;
 @Data
 @AllArgsConstructor
 @NoArgsConstructor
-public class ReceiveText {
+@ToString(callSuper = true)
+public class ReceiveText extends Receive implements Serializable {
 
-    /**
-     * 企业微信CorpID
-     */
-    private String ToUserName;
-    /**
-     * 成员UserID
-     */
-    private String FromUserName;
-    /**
-     * 消息创建时间（整型）
-     */
-    private String CreateTime;
-    /**
-     * 消息类型，此时固定为：text
-     */
-    private String MsgType;
+    private static final long serialVersionUID = -3128203767369877526L;
+
     /**
      * 文本消息内容
      */
-    private String Content;
-    /**
-     * 消息id，64位整型
-     */
-    private String MsgId;
-    /**
-     * 企业应用的id，整型。可在应用的设置页面查看
-     */
-    private String AgentID;
+    @JsonProperty(value = "Content")
+    private String content;
 
 }
