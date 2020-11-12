@@ -1,6 +1,7 @@
 package club.zby.weixin.config;
 
 import club.zby.weixin.entity.ApiRespones;
+import club.zby.weixin.entity.SecretData;
 import club.zby.weixin.entity.UrlTemplateEnum;
 import club.zby.weixin.until.HttpUtiliy;
 import org.apache.commons.lang3.StringUtils;
@@ -29,10 +30,8 @@ public class AccessTokenInterceptor extends HandlerInterceptorAdapter {
     private RedisTemplate<String,String> redisTemplate;
     @Resource
     private HttpUtiliy httpUtiliy;
-    @Value("${corpid}")
-    private String sCorpID; //企业ID
-    @Value("${secret}")
-    private String secret;  //应用的凭证密钥
+    @Resource
+    private SecretData secretData;
 
     @Override
     public boolean preHandle(HttpServletRequest request, HttpServletResponse response, Object handler) throws Exception {
@@ -44,8 +43,8 @@ public class AccessTokenInterceptor extends HandlerInterceptorAdapter {
             return true;
         }
         HashMap<String, String> var = new HashMap<>();
-        var.put("corpid",sCorpID);
-        var.put("corpsecret",secret);
+        var.put("corpid",secretData.getCorpId());
+        var.put("corpsecret",secretData.getSecret());
         ResponseEntity<ApiRespones> responseEntity = httpUtiliy.getForEntity(UrlTemplateEnum.GET_ACCESS_TOKEN.getUrl(), ApiRespones.class,var);
         if(responseEntity.getStatusCode().is2xxSuccessful()){
             ApiRespones apiRespones = responseEntity.getBody();

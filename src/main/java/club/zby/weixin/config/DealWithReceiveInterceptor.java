@@ -1,5 +1,6 @@
 package club.zby.weixin.config;
 
+import club.zby.weixin.entity.SecretData;
 import club.zby.weixin.until.aesconfig.WXBizMsgCrypt;
 import org.apache.commons.io.IOUtils;
 import org.json.JSONObject;
@@ -8,6 +9,7 @@ import org.springframework.beans.factory.annotation.Value;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.web.servlet.handler.HandlerInterceptorAdapter;
 
+import javax.annotation.Resource;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import java.io.InputStream;
@@ -19,12 +21,8 @@ import java.io.InputStream;
 @Configuration
 public class DealWithReceiveInterceptor extends HandlerInterceptorAdapter {
 
-    @Value("${token}")
-    private String sToken;
-    @Value("${EncodingAESKey}")
-    private String sEncodingAESKey;
-    @Value("${corpid}")
-    private String sCorpID; //企业ID
+    @Resource
+    private SecretData secretData;
 
     /**
      * 1.对msg_signature进行校验
@@ -37,7 +35,7 @@ public class DealWithReceiveInterceptor extends HandlerInterceptorAdapter {
         request.setCharacterEncoding("UTF-8");
         response.setCharacterEncoding("UTF-8");
 
-        WXBizMsgCrypt wxcpt = new WXBizMsgCrypt(sToken, sEncodingAESKey, sCorpID);
+        WXBizMsgCrypt wxcpt = new WXBizMsgCrypt(secretData);
         try {
             InputStream inputStream = request.getInputStream();
             //得到主动推送消息

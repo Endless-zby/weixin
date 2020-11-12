@@ -13,6 +13,7 @@
  */
 package club.zby.weixin.until.aesconfig;
 
+import club.zby.weixin.entity.SecretData;
 import club.zby.weixin.entity.WXVerifyIn;
 import org.apache.tomcat.util.codec.binary.Base64;
 import org.springframework.context.annotation.Configuration;
@@ -67,6 +68,16 @@ public class WXBizMsgCrypt {
 
 		this.token = token;
 		this.receiveid = receiveid;
+		aesKey = Base64.decodeBase64(encodingAesKey + "=");
+	}
+	public WXBizMsgCrypt(SecretData secretData) throws AesException {
+		String encodingAesKey = secretData.getEncodingAESKey();
+		if (encodingAesKey.length() != 43) {
+			throw new AesException(AesException.IllegalAesKey);
+		}
+
+		this.token = secretData.getToken();
+		this.receiveid = secretData.getCorpId();
 		aesKey = Base64.decodeBase64(encodingAesKey + "=");
 	}
 

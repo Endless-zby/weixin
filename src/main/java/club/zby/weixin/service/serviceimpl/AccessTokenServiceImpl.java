@@ -1,6 +1,7 @@
 package club.zby.weixin.service.serviceimpl;
 
 import club.zby.weixin.entity.ApiRespones;
+import club.zby.weixin.entity.SecretData;
 import club.zby.weixin.entity.UrlTemplateEnum;
 import club.zby.weixin.service.AccessTokenService;
 import org.apache.commons.lang3.StringUtils;
@@ -26,10 +27,8 @@ import java.util.concurrent.TimeUnit;
 @Service
 public class AccessTokenServiceImpl implements AccessTokenService {
 
-    @Value("${corpid}")
-    private String sCorpID; //企业ID
-    @Value("${secret}")
-    private String secret;  //应用的凭证密钥
+    @Resource
+    private SecretData secretData;
 
     @Resource
     private RestTemplate restTemplate;
@@ -46,8 +45,8 @@ public class AccessTokenServiceImpl implements AccessTokenService {
                 return accessToken;
             }
             HashMap<String, String> var = new HashMap<>();
-            var.put("corpid",sCorpID);
-            var.put("corpsecret",secret);
+            var.put("corpid",secretData.getCorpId());
+            var.put("corpsecret",secretData.getSecret());
             ResponseEntity<ApiRespones> responseEntity = restTemplate.getForEntity(UrlTemplateEnum.GET_ACCESS_TOKEN.getUrl(), ApiRespones.class,var);
             if(responseEntity.getStatusCode().is2xxSuccessful()){
                 ApiRespones apiRespones = responseEntity.getBody();

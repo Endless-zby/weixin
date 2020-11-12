@@ -1,6 +1,7 @@
 package club.zby.weixin.controller.controllerreceive;
 
 import club.zby.weixin.entity.ApiRespones;
+import club.zby.weixin.entity.SecretData;
 import club.zby.weixin.entity.WXVerifyIn;
 import club.zby.weixin.entity.receivemessages.ReceiveText;
 import club.zby.weixin.factory.ReceiveFactory;
@@ -34,12 +35,9 @@ import javax.servlet.http.HttpServletRequest;
 @RequestMapping
 public class ReceiveController {
 
-    @Value("${token}")
-    private String sToken;
-    @Value("${EncodingAESKey}")
-    private String sEncodingAESKey;
-    @Value("${corpid}")
-    private String sCorpID; //企业ID
+
+    @Resource
+    private SecretData secretData;
     @Resource
     private ReceiveFactory receiveFactory;
 
@@ -60,7 +58,7 @@ public class ReceiveController {
          * 4.在1秒内原样返回明文消息内容(不能加引号，不能带bom头，不能带换行符)
          */
         String sEchoStr; //需要返回的明文
-        WXBizMsgCrypt wxcpt = new WXBizMsgCrypt(sToken, sEncodingAESKey, sCorpID);
+        WXBizMsgCrypt wxcpt = new WXBizMsgCrypt(secretData);
         try {
             sEchoStr = wxcpt.VerifyURL(wxVerifyIn);
             System.out.println("verifyurl echostr: " + sEchoStr);
@@ -82,7 +80,7 @@ public class ReceiveController {
     @ResponseBody
     @PostMapping(value = "/receive",consumes = MediaType.TEXT_XML_VALUE)
     public String receivePost(HttpServletRequest request) throws AesException {
-        WXBizMsgCrypt wxcpt = new WXBizMsgCrypt(sToken, sEncodingAESKey, sCorpID);
+        WXBizMsgCrypt wxcpt = new WXBizMsgCrypt(secretData);
         String receive = (String)request.getAttribute("receive");
         String type = (String)request.getAttribute("type");
         ReceiveService receiveFactory = this.receiveFactory.getReceiveFactory(type);
@@ -92,12 +90,14 @@ public class ReceiveController {
                 "   <CreateTime>1348831860</CreateTime>\n" +
                 "   <MsgType><![CDATA[text]]></MsgType>\n" +
                 "   <Content><![CDATA[成功]]></Content>\n" +
+                "   <AgentID><![CDATA[12132113212]]></AgentID>\n" +
                 "</xml>";
         if(receiveFactory == null){
             msg = "不支持此消息类型";
         }
-        String s = receiveFactory.replyXmlInfo(receive);
-        String result = wxcpt.EncryptMsg(msg, "1111", "111");
+        assert receiveFactory != null;
+        String result = receiveFactory.replyXmlInfo(receive);
+        result = wxcpt.EncryptMsg(msg, "1111", "111");
         return result;
     }
 
