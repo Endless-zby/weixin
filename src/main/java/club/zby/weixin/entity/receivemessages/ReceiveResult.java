@@ -4,19 +4,19 @@ import com.fasterxml.jackson.annotation.JsonProperty;
 import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.NoArgsConstructor;
-import lombok.ToString;
 
 import java.io.Serializable;
 
 /**
- * @author 赵博雅
- * @date 2020/11/10 14:34
+ * @author byzhao
+ * @version 1.0
+ * @date 2020/11/14 12:34
  */
 @Data
 @AllArgsConstructor
 @NoArgsConstructor
-public class Receive implements Serializable {
-    private static final long serialVersionUID = -4403317188382330260L;
+public class ReceiveResult implements Serializable {
+    private static final long serialVersionUID = -7997890732800687609L;
 
     /**
      * 企业微信CorpID
@@ -39,16 +39,20 @@ public class Receive implements Serializable {
     @JsonProperty(value = "MsgType")
     private String msgType;
     /**
-     * 消息id，64位整型
+     * 文本消息内容
      */
-
-    @JsonProperty(value = "MsgId")
-    private String msgId;
+    @JsonProperty(value = "Content")
+    private String content;
     /**
-     * 企业应用的id，整型。可在应用的设置页面查看
+     * 图片链接
      */
+    @JsonProperty(value = "PicUrl")
+    private String picUrl;
 
-    @JsonProperty(value = "AgentID")
-    private String agentID;
+    public void textTemplate(String content){
+        this.content = content;
+        this.msgType = "text";
+    }
+
 
 }

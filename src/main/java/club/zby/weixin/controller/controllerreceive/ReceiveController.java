@@ -97,7 +97,7 @@ public class ReceiveController {
         }
         assert receiveFactory != null;
         String result = receiveFactory.replyXmlInfo(receive);
-        result = wxcpt.EncryptMsg(msg, "1111", "111");
+        result = wxcpt.EncryptMsg(result, "1111", "111");
         return result;
     }
 
