@@ -5,7 +5,6 @@ import club.zby.weixin.entity.SecretData;
 import club.zby.weixin.entity.UrlTemplateEnum;
 import club.zby.weixin.until.HttpUtiliy;
 import org.apache.commons.lang3.StringUtils;
-import org.springframework.beans.factory.annotation.Value;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.data.redis.core.BoundValueOperations;
 import org.springframework.data.redis.core.RedisTemplate;
@@ -20,6 +19,8 @@ import java.util.Objects;
 import java.util.concurrent.TimeUnit;
 
 /**
+ * 自动装载accessToken redis中的失效后重新发送请求获取，并写入redis
+ *
  * @author 赵博雅
  * @date 2020/11/9 17:22
  */

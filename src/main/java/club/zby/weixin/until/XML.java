@@ -96,12 +96,12 @@ public class XML {
                 case '&':
                     sb.append("&amp;");
                     break;
-                case '<':
-                    sb.append("&lt;");
-                    break;
-                case '>':
-                    sb.append("&gt;");
-                    break;
+//                case '<':
+//                    sb.append("&lt;");
+//                    break;
+//                case '>':
+//                    sb.append("&gt;");
+//                    break;
                 case '"':
                     sb.append("&quot;");
                     break;
@@ -432,11 +432,11 @@ public class XML {
                             if (i > 0) {
                                 sb.append('\n');
                             }
-                            sb.append("<![CDATA[").append(escape(val.toString())).append("]]>");
+                            sb.append(escape(val.toString()));
                             i++;
                         }
                     } else {
-                        sb.append("<![CDATA[").append(escape(value.toString())).append("]]>");
+                        sb.append(escape(value.toString()));
                     }
 
                     // Emit an array of similar keys
@@ -453,7 +453,7 @@ public class XML {
                             sb.append(key);
                             sb.append('>');
                         } else {
-                            sb.append("<![CDATA[").append(toString(val, key)).append("]]>");
+                            sb.append(toString(val, key));
                         }
                     }
                 } else if ("".equals(value)) {
@@ -464,7 +464,7 @@ public class XML {
                     // Emit a new tag <k>
 
                 } else {
-                    sb.append("<![CDATA[").append(toString(value, key)).append("]]>");
+                    sb.append(toString(value, key));
                 }
             }
             if (tagName != null) {

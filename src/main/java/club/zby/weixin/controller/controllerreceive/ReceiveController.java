@@ -21,6 +21,7 @@ import org.springframework.web.bind.annotation.*;
 
 import javax.annotation.Resource;
 import javax.servlet.http.HttpServletRequest;
+import java.time.LocalDateTime;
 
 
 /**
@@ -83,21 +84,12 @@ public class ReceiveController {
         WXBizMsgCrypt wxcpt = new WXBizMsgCrypt(secretData);
         String receive = (String)request.getAttribute("receive");
         String type = (String)request.getAttribute("type");
+
         ReceiveService receiveFactory = this.receiveFactory.getReceiveFactory(type);
-        String msg = "<xml>\n" +
-                "   <ToUserName><![CDATA[ZhaoBoYa]]></ToUserName>\n" +
-                "   <FromUserName><![CDATA[ww8783f3dbd5f49266]]></FromUserName> \n" +
-                "   <CreateTime>1348831860</CreateTime>\n" +
-                "   <MsgType><![CDATA[text]]></MsgType>\n" +
-                "   <Content><![CDATA[成功]]></Content>\n" +
-                "   <AgentID><![CDATA[12132113212]]></AgentID>\n" +
-                "</xml>";
-        if(receiveFactory == null){
-            msg = "不支持此消息类型";
-        }
+
         assert receiveFactory != null;
         String result = receiveFactory.replyXmlInfo(receive);
-        result = wxcpt.EncryptMsg(result, "1111", "111");
+        result = wxcpt.EncryptMsg(result, LocalDateTime.now().toString(), "byzhao");
         return result;
     }
 

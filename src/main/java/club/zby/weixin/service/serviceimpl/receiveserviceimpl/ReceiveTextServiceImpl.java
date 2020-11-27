@@ -1,11 +1,11 @@
 package club.zby.weixin.service.serviceimpl.receiveserviceimpl;
 
 import club.zby.weixin.entity.receivemessages.Receive;
+import club.zby.weixin.entity.receivemessages.ReceiveResult;
 import club.zby.weixin.entity.receivemessages.ReceiveText;
 import club.zby.weixin.service.ReceiveService;
 import com.alibaba.fastjson.JSON;
-import org.dom4j.Document;
-import org.dom4j.DocumentHelper;
+import org.springframework.beans.BeanUtils;
 import org.springframework.stereotype.Component;
 
 /**
@@ -24,10 +24,8 @@ public class ReceiveTextServiceImpl implements ReceiveService {
     @Override
     public String replyXmlInfo(String postData) {
         ReceiveText receiveText = JSON.parseObject(postData, ReceiveText.class);
-        receiveText.setContent("sdsdsdsdsd");
-        Document document = DocumentHelper.createDocument();
-        System.out.println(receiveText);
-
-        return "";
+        ReceiveResult receiveResult = new ReceiveResult();
+        BeanUtils.copyProperties(receiveText,receiveResult);
+        return receiveResult.textTemplate("这是一个回复消息");
     }
 }
