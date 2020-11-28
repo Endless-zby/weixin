@@ -1,20 +1,14 @@
 package club.zby.weixin.controller.controllerreceive;
 
-import club.zby.weixin.entity.ApiRespones;
+
+import club.zby.weixin.entity.ReceiveData;
 import club.zby.weixin.entity.SecretData;
 import club.zby.weixin.entity.WXVerifyIn;
-import club.zby.weixin.entity.receivemessages.ReceiveText;
+import club.zby.weixin.entity.interfaces.ReceiveInfo;
 import club.zby.weixin.factory.ReceiveFactory;
 import club.zby.weixin.service.ReceiveService;
 import club.zby.weixin.until.aesconfig.AesException;
 import club.zby.weixin.until.aesconfig.WXBizMsgCrypt;
-import com.alibaba.fastjson.JSON;
-import com.sun.xml.internal.bind.v2.runtime.XMLSerializer;
-import org.apache.commons.io.IOUtils;
-import org.apache.commons.lang3.StringUtils;
-import org.json.JSONObject;
-import org.json.XML;
-import org.springframework.beans.factory.annotation.Value;
 import org.springframework.http.MediaType;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.*;
@@ -75,20 +69,18 @@ public class ReceiveController {
 
     /**
      * 回调验证配置  接收事件消息  回复消息
-     * @param request
+     * @param receiveData
      * @return
+     * @throws AesException
      */
     @ResponseBody
     @PostMapping(value = "/receive",consumes = MediaType.TEXT_XML_VALUE)
-    public String receivePost(HttpServletRequest request) throws AesException {
+    public String receivePost(@ReceiveInfo(message = "错误") ReceiveData receiveData) throws AesException {
         WXBizMsgCrypt wxcpt = new WXBizMsgCrypt(secretData);
-        String receive = (String)request.getAttribute("receive");
-        String type = (String)request.getAttribute("type");
 
-        ReceiveService receiveFactory = this.receiveFactory.getReceiveFactory(type);
-
+        ReceiveService receiveFactory = this.receiveFactory.getReceiveFactory(receiveData.getType());
         assert receiveFactory != null;
-        String result = receiveFactory.replyXmlInfo(receive);
+        String result = receiveFactory.replyXmlInfo(receiveData.getPostData());
         result = wxcpt.EncryptMsg(result, LocalDateTime.now().toString(), "byzhao");
         return result;
     }
