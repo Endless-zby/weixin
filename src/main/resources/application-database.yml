@@ -2,17 +2,16 @@ spring:
 
   datasource:
      driverClassName: com.mysql.jdbc.Driver
-     url: jdbc:mysql://***.***.***.***:1111/zhaoboya?characterEncoding=utf-8&useSSL=true
+     url: jdbc:mysql://39.96.160.110:3306/zhaoboya?characterEncoding=utf-8&useSSL=true
         #    url: jdbc:mysql://localhost:3306/arms?characterEncoding=utf-8
-     username: 1111
-     password: 1111
+     username: zhaoboya
+     password: zhaoboya
 
   redis:
-    host: 11.11.11.11
-    port: 1111
+    host: 39.96.160.110
+    port: 9988
     database: 0
-    password: 111111
-
+    password: zby123456
 
   jpa:
     database-platform: org.hibernate.dialect.MySQL5InnoDBDialect
