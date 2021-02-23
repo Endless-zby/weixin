@@ -13,6 +13,7 @@ spring:
     database: 0
     password: zby123456
 
+
   jpa:
     database-platform: org.hibernate.dialect.MySQL5InnoDBDialect
     # spring boot 2.0 的坑， spring boot2.+后默认使用的是MyISAM引擎
