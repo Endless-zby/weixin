@@ -8,7 +8,21 @@ GET http://{{baseUrl}}/weixin/getAccessToken
 GET http://{{baseUrl}}/webhook/send
 
 ### 获取应用菜单
-GET http://{{baseUrl}}/menu/get
+GET http://{{baseUrl}}/menu/get?agentId=1000002
 
 ### 创建菜单
 POST http://{{baseUrl}}/menu/create
+
+
+
+
+{
+    "MediaId": "11uaG5pfiL40QUAcv6Mix-b3_eGJ7DOC92qzNZwaPGV727qAcD0v5NWr8OuCSmxdY",
+    "CreateTime": 1614060876,
+    "ToUserName": "ww8783f3dbd5f49266",
+    "FromUserName": "ZhaoBoYa",
+    "MsgType": "image",
+    "AgentID": 1000002,
+    "PicUrl": "https://wework.qpic.cn/wwpic/541999_ddM8OWQpSZ2yGSu_1614060876/",
+    "MsgId": 6932338678286187268
+}

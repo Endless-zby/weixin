@@ -43,7 +43,7 @@ public class ReceiveInfoMethodArgumentResolver implements HandlerMethodArgumentR
         ReceiveData receiveData = new ReceiveData();
         receiveData.setPostData((String)servletRequest.getAttribute("receive"));
         receiveData.setType((String)servletRequest.getAttribute("type"));
-        if (receiveInfo.required()) {
+        if (!receiveInfo.flag()) {
             throw new Exception(receiveInfo.message());
         }
         return receiveData;

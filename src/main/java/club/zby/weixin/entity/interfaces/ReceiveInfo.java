@@ -12,7 +12,8 @@ import java.lang.annotation.*;
 @Target(ElementType.PARAMETER)
 public @interface ReceiveInfo {
 
-    boolean required() default true;
+    //从request中装载接收到的消息体和消息类型
+    boolean flag() default true;
 
     String message() default "未接受到任何消息";
 

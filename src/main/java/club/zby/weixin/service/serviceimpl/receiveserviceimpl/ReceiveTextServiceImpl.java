@@ -9,6 +9,7 @@ import org.springframework.beans.BeanUtils;
 import org.springframework.stereotype.Component;
 
 /**
+ * 文本消息处理
  * @author 赵博雅
  * @date 2020/11/10 15:26
  */
@@ -26,6 +27,6 @@ public class ReceiveTextServiceImpl implements ReceiveService {
         ReceiveText receiveText = JSON.parseObject(postData, ReceiveText.class);
         ReceiveResult receiveResult = new ReceiveResult();
         BeanUtils.copyProperties(receiveText,receiveResult);
-        return receiveResult.textTemplate("这是一个回复消息");
+        return receiveResult.textTemplate("这是一个正在测试的文本消息回复");
     }
 }
