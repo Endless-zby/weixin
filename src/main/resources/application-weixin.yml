@@ -1,13 +1,13 @@
 applicationSecret:
   # 企业ID
-  corpId: ww8783f3dbd5f49266
+  corpId: 1111111111
 
   # 应用密钥(短信转发应用)
-  secret: YD1o25EMB1I5pvRvGIgsLU_6Vby5_aVMiPgw2k0wVMg
+  secret: 1111111111
 
   #Token 用于回调地址认证
-  token: 1hjwzJhlf9SS5byieiunm7G5aRn0Iou
+  token: 1111111111
 
   # 用于消息体的加密，是AES密钥的Base64编码
-  encodingAESKey: Ty5DWl18tUL5Ixugrfc7ilEGYH1ogfAd6v2nzaEjdJz
+  encodingAESKey: 1111111111
 

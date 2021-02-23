@@ -10,6 +10,6 @@
 ../weixin.iml
 ../target
 # 忽略两个关键的配置文件
-../src/java/resources/application-database.yml
-../src/java/resources/application-weixin.yml
+../src/main/resources/application-database.yml
+../src/main/resources/application-weixin.yml
 
