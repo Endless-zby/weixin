@@ -9,3 +9,6 @@
 .idea/
 ../weixin.iml
 ../target
+src/java/resources/application-database.yml
+src/java/resources/application-weixin.yml
+
