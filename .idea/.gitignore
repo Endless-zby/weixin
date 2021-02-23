@@ -9,6 +9,7 @@
 .idea/
 ../weixin.iml
 ../target
-../src/java/resources/application-database.yml
-../src/java/resources/application-weixin.yml
+# 忽略两个关键的配置文件
+#../src/java/resources/application-database.yml
+#../src/java/resources/application-weixin.yml
 
