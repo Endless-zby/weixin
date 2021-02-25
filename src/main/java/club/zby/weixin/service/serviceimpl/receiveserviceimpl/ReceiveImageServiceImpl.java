@@ -12,13 +12,11 @@ import org.springframework.stereotype.Component;
  * @author 赵博雅
  * @date 2020/11/10 15:24
  */
-@Component
+
 public class ReceiveImageServiceImpl implements ReceiveService {
     @Override
-    public void printReceive(String postData) {
-        ReceiveImage receiveImage = JSON.parseObject(postData, ReceiveImage.class);
-        System.out.println(receiveImage.toString());
-        System.out.println(receiveImage.toSuperString());
+    public ReceiveImage printReceive(String postData) {
+        return JSON.parseObject(postData, ReceiveImage.class);
     }
 
     @Override

@@ -2,6 +2,7 @@ package club.zby.weixin.entity;
 
 import lombok.Builder;
 import lombok.Data;
+import org.apache.commons.lang3.StringUtils;
 
 /**
  * @author byzhao
@@ -25,7 +26,7 @@ public class RobotTemplate {
 
 
     public String buildRobotInfo(){
-        return template.replace("{1}", title).replace("{3}", value).replace("{2}", color);
+        return template.replace("{1}", title).replace("{3}", StringUtils.defaultString(value,"null")).replace("{2}", color);
     }
 
 

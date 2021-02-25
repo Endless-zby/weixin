@@ -4,7 +4,9 @@ import lombok.AllArgsConstructor;
 import lombok.Builder;
 import lombok.Data;
 import lombok.NoArgsConstructor;
+import org.hibernate.annotations.Table;
 
+import java.io.Serializable;
 import java.util.List;
 
 /**
@@ -17,7 +19,8 @@ import java.util.List;
 @AllArgsConstructor
 @NoArgsConstructor
 @Builder
-public class MenuTemplate {
+
+public class MenuTemplate implements Serializable {
 
     /**
      * 点击推事件
@@ -65,6 +68,8 @@ public class MenuTemplate {
      */
     public static final String view_miniprogram = "view_miniprogram";
 
+
+    private static final long serialVersionUID = -3974405975674820250L;
 
 
     /**

@@ -30,7 +30,7 @@ public class AccessTokenInterceptor extends HandlerInterceptorAdapter {
     @Resource
     private RedisTemplate<String,String> redisTemplate;
     @Resource
-    private HttpUtiliy httpUtiliy;
+    private HttpUtiliy<ApiRespones> httpUtiliy;
     @Resource
     private SecretData secretData;
 
@@ -50,7 +50,7 @@ public class AccessTokenInterceptor extends HandlerInterceptorAdapter {
         if(responseEntity.getStatusCode().is2xxSuccessful()){
             ApiRespones apiRespones = responseEntity.getBody();
             // 此处保存获取的AccessToken
-            assert apiRespones != null : Objects.requireNonNull(responseEntity.getBody()).getErrmsg();
+            assert apiRespones != null : Objects.requireNonNull(responseEntity.getBody(),"获取AccessToken失败！").getErrmsg();
             accessToken_vpn.set(apiRespones.getAccess_token(),apiRespones.getExpires_in() - 60, TimeUnit.SECONDS);
             request.setAttribute("accessToken",accessToken);
             return true;

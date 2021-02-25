@@ -10,6 +10,7 @@ import org.springframework.data.redis.core.BoundValueOperations;
 import org.springframework.data.redis.core.RedisOperations;
 import org.springframework.data.redis.core.RedisTemplate;
 import org.springframework.http.ResponseEntity;
+import org.springframework.stereotype.Component;
 import org.springframework.stereotype.Service;
 import org.springframework.web.client.RestTemplate;
 
@@ -23,8 +24,7 @@ import java.util.concurrent.TimeUnit;
  * @version 1.0
  * @date 2020/11/8 2:00
  */
-
-@Service
+@Component
 public class AccessTokenServiceImpl implements AccessTokenService {
 
     @Resource

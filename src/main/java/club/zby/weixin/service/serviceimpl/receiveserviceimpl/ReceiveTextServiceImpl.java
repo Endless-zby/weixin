@@ -6,20 +6,22 @@ import club.zby.weixin.entity.receivemessages.ReceiveText;
 import club.zby.weixin.service.ReceiveService;
 import com.alibaba.fastjson.JSON;
 import org.springframework.beans.BeanUtils;
+import org.springframework.data.redis.core.RedisTemplate;
 import org.springframework.stereotype.Component;
+
+import javax.annotation.Resource;
 
 /**
  * 文本消息处理
  * @author 赵博雅
  * @date 2020/11/10 15:26
  */
-@Component
-public class ReceiveTextServiceImpl implements ReceiveService {
-    @Override
-    public void printReceive(String postData) {
-        ReceiveText receiveText = JSON.parseObject(postData, ReceiveText.class);
-        System.out.println(receiveText.toString());
 
+public class ReceiveTextServiceImpl implements ReceiveService {
+
+    @Override
+    public ReceiveText printReceive(String postData) {
+         return JSON.parseObject(postData, ReceiveText.class);
     }
 
     @Override

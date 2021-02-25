@@ -10,6 +10,7 @@ import org.springframework.http.HttpEntity;
 import org.springframework.http.HttpHeaders;
 import org.springframework.http.MediaType;
 import org.springframework.http.ResponseEntity;
+import org.springframework.stereotype.Component;
 import org.springframework.stereotype.Service;
 import org.springframework.web.client.RestTemplate;
 
@@ -23,7 +24,7 @@ import java.util.List;
  * @date 2020/11/8 2:00
  */
 
-@Service
+@Component
 public class RobotServiceImpl implements RobotService {
 
     @Resource

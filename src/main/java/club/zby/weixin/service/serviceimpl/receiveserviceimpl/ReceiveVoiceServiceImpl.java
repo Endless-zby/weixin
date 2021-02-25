@@ -12,12 +12,11 @@ import org.springframework.stereotype.Component;
  * @author 赵博雅
  * @date 2020/11/10 15:26
  */
-@Component
+
 public class ReceiveVoiceServiceImpl implements ReceiveService {
     @Override
-    public void printReceive(String postData) {
-        ReceiveVoice receiveVoice = JSON.parseObject(postData, ReceiveVoice.class);
-        System.out.println(receiveVoice);
+    public ReceiveVoice printReceive(String postData) {
+        return JSON.parseObject(postData, ReceiveVoice.class);
     }
 
     @Override

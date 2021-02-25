@@ -9,6 +9,7 @@ import club.zby.weixin.until.HttpUtiliy;
 import com.alibaba.fastjson.JSON;
 import org.springframework.http.MediaType;
 import org.springframework.http.ResponseEntity;
+import org.springframework.stereotype.Component;
 import org.springframework.stereotype.Service;
 
 import javax.annotation.Resource;
@@ -19,7 +20,7 @@ import java.util.Map;
  * @author 赵博雅
  * @date 2020/11/9 16:44
  */
-@Service
+@Component
 public class MenuServiceImpl implements MenuService {
 
     @Resource

@@ -5,6 +5,8 @@ import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.NoArgsConstructor;
 
+import java.io.Serializable;
+
 /**
  * @author 赵博雅
  * @date 2020/11/10 18:30
@@ -12,7 +14,7 @@ import lombok.NoArgsConstructor;
 @Data
 @AllArgsConstructor
 @NoArgsConstructor
-public class EventClick extends Receive {
+public class EventClick extends Receive implements Serializable {
     private static final long serialVersionUID = -1689316726774523297L;
 
     /**

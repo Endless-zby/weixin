@@ -11,7 +11,7 @@ GET http://{{baseUrl}}/webhook/send
 GET http://{{baseUrl}}/menu/get?agentId=1000002
 
 ### 创建菜单
-POST http://{{baseUrl}}/menu/create
+POST http://{{baseUrl}}/menu/create?agentId=1000002
 
 
 

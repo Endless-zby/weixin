@@ -14,12 +14,11 @@ import java.util.ArrayList;
  * @author 赵博雅
  * @date 2020/11/10 15:26
  */
-@Component
+
 public class ReceiveLocationServiceImpl implements ReceiveService {
     @Override
-    public void printReceive(String postData) {
-        ReceiveLocation receiveLocation = JSON.parseObject(postData, ReceiveLocation.class);
-        System.out.println(receiveLocation);
+    public ReceiveLocation printReceive(String postData) {
+        return JSON.parseObject(postData, ReceiveLocation.class);
     }
 
     @Override
