@@ -17,11 +17,11 @@ public class ReceiveFactory {
      * @return
      */
     public ReceiveService getReceiveFactory(String type) {
-        String className = MsgType.valueOf(type).getClassName();
 
-        if(StringUtils.isEmpty(className)){
+        if(StringUtils.isEmpty(type)){
             return null;
         }
+        String className = MsgType.valueOf(type).getClassName();
 
         try {
             return (ReceiveService) Class.forName(className).newInstance();

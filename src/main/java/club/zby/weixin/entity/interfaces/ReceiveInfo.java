@@ -9,7 +9,7 @@ import java.lang.annotation.*;
  */
 
 @Retention(RetentionPolicy.RUNTIME)
-@Target(ElementType.PARAMETER)
+@Target({ElementType.METHOD,ElementType.PARAMETER})
 public @interface ReceiveInfo {
 
     //从request中装载接收到的消息体和消息类型

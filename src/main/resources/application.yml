@@ -10,5 +10,6 @@ spring:
     multipart:
       max-file-size: 10MB
 
-
+localCache:
+  apiCache: true #是否开启接口级本地缓存
 
