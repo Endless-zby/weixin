@@ -10,6 +10,27 @@ spring:
     multipart:
       max-file-size: 10MB
 
-localCache:
-  apiCache: true #是否开启接口级本地缓存
+  mail:
+    host: smtp.qq.com
+    username: 381016296@qq.com
+    password: axdymglidbvmbiai
+
+    default-encoding: utf-8
+    properties:
+      mail:
+        smtp:
+          auth: true
+          starttls:
+            enable: false
+            required: false
+
+#设置一个邮件发送人
+lance:
+  mail:
+    sender: 381016296@qq.com
+
+
+conditional:
+  # 带有@ReceiveInfo注解的方法，打印该log
+  logAop: true #是否开启切面注入
 

@@ -4,6 +4,7 @@ package club.zby.weixin.controller.controllerreceive;
 import club.zby.weixin.entity.ReceiveData;
 import club.zby.weixin.entity.SecretData;
 import club.zby.weixin.entity.WXVerifyIn;
+import club.zby.weixin.entity.interfaces.AfterSendMessages;
 import club.zby.weixin.entity.interfaces.ReceiveInfo;
 import club.zby.weixin.entity.receivemessages.Receive;
 import club.zby.weixin.entity.receivemessages.ReceiveResult;
@@ -20,6 +21,7 @@ import org.springframework.web.bind.annotation.*;
 
 import javax.annotation.Resource;
 import javax.servlet.http.HttpServletRequest;
+import javax.validation.constraints.NotNull;
 import java.time.LocalDateTime;
 
 
@@ -79,6 +81,7 @@ public class ReceiveController {
      * @throws AesException
      */
     @ResponseBody
+    @AfterSendMessages
     @PostMapping(value = "/receive",consumes = MediaType.TEXT_XML_VALUE)
     public String receivePost(@ReceiveInfo(message = "错误") ReceiveData receiveData) throws AesException {
         WXBizMsgCrypt wxcpt = new WXBizMsgCrypt(secretData);
