@@ -22,8 +22,8 @@ public @interface AfterSendMessages {
 
     boolean isSendEmail() default false;    //开启发送邮件功能
 
-    String[] toEmail() default {"2220624782@qq.com"};        //发邮件给这个人
+    String[] toEmail() default {"2220624782@qq.com"};   //发邮件给这个人
 
-    String topic() default "idea激活码";     //主题
+    String topic();   //主题
 
 }

@@ -6,19 +6,15 @@ import club.zby.weixin.entity.RobotTemplate;
 import club.zby.weixin.service.EmailService;
 import club.zby.weixin.service.RobotService;
 import lombok.extern.slf4j.Slf4j;
-import org.apache.commons.lang3.ObjectUtils;
 import org.apache.commons.lang3.StringUtils;
 import org.aspectj.lang.JoinPoint;
 import org.aspectj.lang.annotation.AfterReturning;
 import org.aspectj.lang.annotation.Aspect;
-import org.aspectj.lang.annotation.Pointcut;
 import org.aspectj.lang.reflect.MethodSignature;
 import org.springframework.stereotype.Component;
 
 import javax.annotation.Resource;
-import javax.validation.constraints.Null;
 import java.lang.reflect.Method;
-import java.time.LocalDateTime;
 import java.util.ArrayList;
 
 /**
@@ -34,7 +30,6 @@ public class AfterSendMessagesMonitor {
     private RobotService robotService;
     @Resource
     private EmailService emailService;
-
 
     @AfterReturning(pointcut = "@annotation(AfterSendMessages)",returning = "result")
     public void afterSendMessages(JoinPoint joinPoint , Object result){
@@ -58,9 +53,6 @@ public class AfterSendMessagesMonitor {
             }
         }
         ArrayList<RobotTemplate> robotTemplates = new ArrayList<>();
-
-        RobotTemplate build = RobotTemplate.builder().title("时间：").value(LocalDateTime.now().toString()).color(RobotTemplate.INFO).build();
-        robotTemplates.add(build);
 
         if(sendResult.length() > 4096 && sendEmail){
             RobotTemplate build2 = RobotTemplate.builder().title("更多：").value("消息超过指定长度【4096】，该消息已转发送至邮箱 -> " + strings + "中，请查收").color(RobotTemplate.WARNING).build();

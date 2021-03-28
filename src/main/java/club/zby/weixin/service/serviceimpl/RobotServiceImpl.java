@@ -5,16 +5,15 @@ import club.zby.weixin.entity.RobotTemplate;
 import club.zby.weixin.entity.UrlTemplateEnum;
 import club.zby.weixin.service.RobotService;
 import com.alibaba.fastjson.JSON;
-import org.springframework.beans.factory.annotation.Value;
 import org.springframework.http.HttpEntity;
 import org.springframework.http.HttpHeaders;
 import org.springframework.http.MediaType;
 import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Component;
-import org.springframework.stereotype.Service;
 import org.springframework.web.client.RestTemplate;
 
 import javax.annotation.Resource;
+import java.time.LocalDateTime;
 import java.util.HashMap;
 import java.util.List;
 
@@ -35,12 +34,19 @@ public class RobotServiceImpl implements RobotService {
     @Override
     public ApiRespones robotToSendByMarkdown(List<RobotTemplate> robotTemplates) {
         HashMap<String, Object> variable = new HashMap<>();
-        variable.put("msgtype","markdown");
         HashMap<String, Object> variablev2 = new HashMap<>();
+
+        variable.put("msgtype","markdown");
+
+
+        RobotTemplate build = RobotTemplate.builder().title("时间：").value(LocalDateTime.now().toString()).color(RobotTemplate.INFO).build();
+        robotTemplates.add(build);
+
         StringBuffer stringBuffer = new StringBuffer();
         for (RobotTemplate robot: robotTemplates) {
             stringBuffer.append(robot.buildRobotInfo());
         }
+
         variablev2.put("content",stringBuffer);
         variable.put("markdown",variablev2);
 

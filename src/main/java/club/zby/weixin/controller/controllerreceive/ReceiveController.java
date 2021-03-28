@@ -4,24 +4,19 @@ package club.zby.weixin.controller.controllerreceive;
 import club.zby.weixin.entity.ReceiveData;
 import club.zby.weixin.entity.SecretData;
 import club.zby.weixin.entity.WXVerifyIn;
-import club.zby.weixin.entity.interfaces.AfterSendMessages;
 import club.zby.weixin.entity.interfaces.ReceiveInfo;
-import club.zby.weixin.entity.receivemessages.Receive;
-import club.zby.weixin.entity.receivemessages.ReceiveResult;
 import club.zby.weixin.factory.ReceiveFactory;
 import club.zby.weixin.service.ReceiveService;
-import club.zby.weixin.service.serviceimpl.receiveserviceimpl.ReceiveImageServiceImpl;
 import club.zby.weixin.until.aesconfig.AesException;
 import club.zby.weixin.until.aesconfig.WXBizMsgCrypt;
-import org.springframework.beans.BeanUtils;
-import org.springframework.context.annotation.Bean;
 import org.springframework.http.MediaType;
 import org.springframework.stereotype.Controller;
-import org.springframework.web.bind.annotation.*;
+import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.ResponseBody;
 
 import javax.annotation.Resource;
-import javax.servlet.http.HttpServletRequest;
-import javax.validation.constraints.NotNull;
 import java.time.LocalDateTime;
 
 
@@ -81,7 +76,6 @@ public class ReceiveController {
      * @throws AesException
      */
     @ResponseBody
-    @AfterSendMessages
     @PostMapping(value = "/receive",consumes = MediaType.TEXT_XML_VALUE)
     public String receivePost(@ReceiveInfo(message = "错误") ReceiveData receiveData) throws AesException {
         WXBizMsgCrypt wxcpt = new WXBizMsgCrypt(secretData);

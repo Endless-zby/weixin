@@ -20,8 +20,8 @@ import java.util.Arrays;
 @Aspect
 @Slf4j
 @Component
-//conditional.logAop 控制Component是否生效
 @ConditionalOnProperty(prefix = "conditional",name = "logAop",havingValue = "true")
+//conditional.logAop 控制Component是否生效
 public class ReceiveInfoMonitor {
 
     @Before(value = "@annotation(club.zby.weixin.entity.interfaces.ReceiveInfo)")
