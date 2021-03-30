@@ -38,11 +38,11 @@ public class RobotServiceImpl implements RobotService {
 
         variable.put("msgtype","markdown");
 
+        StringBuffer stringBuffer = new StringBuffer();
 
         RobotTemplate build = RobotTemplate.builder().title("时间：").value(LocalDateTime.now().toString()).color(RobotTemplate.INFO).build();
-        robotTemplates.add(build);
 
-        StringBuffer stringBuffer = new StringBuffer();
+        stringBuffer.append(build.buildRobotInfo());
         for (RobotTemplate robot: robotTemplates) {
             stringBuffer.append(robot.buildRobotInfo());
         }

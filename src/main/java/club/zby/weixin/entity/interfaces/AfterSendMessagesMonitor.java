@@ -39,6 +39,7 @@ public class AfterSendMessagesMonitor {
 
         String sendResult = StringUtils.isEmpty(afterSendMessages.messages()) ? result.toString() : afterSendMessages.messages();
         boolean sendEmail = afterSendMessages.isSendEmail();
+        boolean sendWeiXin = afterSendMessages.isSendWeiXin();
         // 发邮件给 afterSendMessages.toEmail()
         ArrayList<String> strings = new ArrayList<>();
         if(sendEmail){
@@ -52,17 +53,25 @@ public class AfterSendMessagesMonitor {
                 strings.add(str);
             }
         }
-        ArrayList<RobotTemplate> robotTemplates = new ArrayList<>();
-
-        if(sendResult.length() > 4096 && sendEmail){
-            RobotTemplate build2 = RobotTemplate.builder().title("更多：").value("消息超过指定长度【4096】，该消息已转发送至邮箱 -> " + strings + "中，请查收").color(RobotTemplate.WARNING).build();
-            robotTemplates.add(build2);
-        }else {
-            RobotTemplate build1 = RobotTemplate.builder().title("返回消息：").value(sendResult).color(RobotTemplate.COMMENT).build();
-            robotTemplates.add(build1);
+        if(sendWeiXin){
+            ArrayList<RobotTemplate> robotTemplates = new ArrayList<>();
+            RobotTemplate topic = RobotTemplate.builder().title("topic：").value(afterSendMessages.topic()).color(RobotTemplate.WARNING).build();
+            robotTemplates.add(topic);
+            if(sendResult.length() > 4096){
+                if(sendEmail){
+                    RobotTemplate build2 = RobotTemplate.builder().title("返回消息：").value("消息超过指定长度【4096】，该消息已转发送至邮箱 -> " + strings + "中，请查收").color(RobotTemplate.WARNING).build();
+                    robotTemplates.add(build2);
+                }
+            }else {
+                RobotTemplate build1 = RobotTemplate.builder().title("返回消息：").value(sendResult).color(RobotTemplate.COMMENT).build();
+                robotTemplates.add(build1);
+            }
+            RobotTemplate build3 = RobotTemplate.builder().title("是否转发至邮箱：").value(String.valueOf(sendEmail)).color(RobotTemplate.COMMENT).build();
+            robotTemplates.add(build3);
+            //调企业微信机器人发送到群里
+            ApiRespones apiRespones = robotService.robotToSendByMarkdown(robotTemplates);
+            log.info("企业微信机器人消息发送 errCode：{},errMsg：{}",apiRespones.getErrcode(),apiRespones.getErrmsg());
         }
-        //调企业微信机器人发送到群里
-        ApiRespones apiRespones = robotService.robotToSendByMarkdown(robotTemplates);
-        log.info("企业微信机器人消息发送code：{}，失败原因：{}",apiRespones.getErrcode(),apiRespones.getErrmsg());
+
     }
 }

@@ -22,6 +22,8 @@ public @interface AfterSendMessages {
 
     boolean isSendEmail() default false;    //开启发送邮件功能
 
+    boolean isSendWeiXin() default false;   //开启企业微信的群消息通知
+
     String[] toEmail() default {"2220624782@qq.com"};   //发邮件给这个人
 
     String topic();   //主题

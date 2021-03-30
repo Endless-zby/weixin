@@ -25,7 +25,7 @@ public class test {
 
     @ResponseBody
     @ReceiveInfo
-    @AfterSendMessages
+    @AfterSendMessages(topic = "测试")
     @GetMapping(value = "/test1")
     public String test1(String id) {
         MailBean mailBean = new MailBean();
