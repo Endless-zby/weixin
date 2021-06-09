@@ -24,6 +24,17 @@ spring:
             enable: false
             required: false
 
+  cloud:
+    nacos:
+      discovery:
+        server-addr: 127.0.0.1:8848
+        group: ZBY_TEST_GROUP
+
+      config:
+        server-addr: 127.0.0.1:8848
+        file-extension: yml
+
+
 #设置一个邮件发送人
 lance:
   mail:
@@ -33,4 +44,6 @@ lance:
 conditional:
   # 带有@ReceiveInfo注解的方法，打印该方法的出入参到log
   logAop: true #是否开启切面注入
+
+
 

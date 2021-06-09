@@ -25,8 +25,8 @@ public class IdeaCodeScheduled {
     private DownLoadFile downLoadFile;
     private int i;
 
-    @AfterSendMessages(topic = "idea激活码", isSendWeiXin = true)
-    @Scheduled(cron = "0/59 * * * * ? ")
+    @AfterSendMessages(topic = "idea激活码", isSendWeiXin = true, isSendEmail = true)
+    @Scheduled(cron = "0 0 4,18,23 * * ? ")
     public String execute() throws IOException {
         String ideaCode = getIdeaCode();
         log.info("执行第{}次",++i);

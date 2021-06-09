@@ -3,9 +3,12 @@ package club.zby.weixin.controller.controllerrobot;
 import club.zby.weixin.entity.ApiRespones;
 import club.zby.weixin.entity.RobotTemplate;
 import club.zby.weixin.service.RobotService;
+import org.springframework.beans.factory.annotation.Value;
+import org.springframework.cloud.context.config.annotation.RefreshScope;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.ResponseBody;
 
 import javax.annotation.Resource;
@@ -18,11 +21,15 @@ import java.util.ArrayList;
  */
 
 @Controller
+@RefreshScope
 @RequestMapping(value = "/webhook")
 public class RobotController {
 
     @Resource
     private RobotService robotService;
+    @Value("${sd}")
+    private String config;
+
 
     /**
      * 机器人 消息发布
@@ -48,4 +55,11 @@ public class RobotController {
         return "失败";
     }
 
+
+
+    @ResponseBody
+    @GetMapping(value = "/getValue")
+    public String getValue() {
+        return config;
+    }
 }
