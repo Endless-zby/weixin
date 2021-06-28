@@ -26,13 +26,13 @@ public class IdeaCodeScheduled {
     private int i;
 
     @AfterSendMessages(topic = "idea激活码", isSendWeiXin = true)
-    @Scheduled(cron = "0/59 * * * * ? ")
+    @Scheduled(cron = "0 0 1 * * ?")
+    // 每天凌晨1点执行一次
     public String execute() throws IOException {
         String ideaCode = getIdeaCode();
         log.info("执行第{}次",++i);
         return ideaCode;
     }
-
 
     public String getIdeaCode() throws IOException {
         // 下载压缩文件
