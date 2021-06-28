@@ -16,7 +16,7 @@ import java.time.format.DateTimeFormatter;
 @Component
 public class IdeaCodeScheduled {
 
-    private static final String DOWNLOAD_PATH = "D:\\uTools";
+    private static final String DOWNLOAD_PATH = "/root/ideaTemp";
     private static final String DOWNLOAD_NAME = LocalDateTime.now().format(DateTimeFormatter.ofPattern("yyyy-MM-dd")) + ".zip";
     private static final String PARSING_ZIP_FILE = DOWNLOAD_PATH + "\\" + DOWNLOAD_NAME;
     private static final String DOWNLOAD_URL = "http://idea.medeming.com/a/jihuoma1.zip";
