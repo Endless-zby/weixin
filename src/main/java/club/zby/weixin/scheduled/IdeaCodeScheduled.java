@@ -3,6 +3,7 @@ package club.zby.weixin.scheduled;
 import club.zby.weixin.entity.interfaces.AfterSendMessages;
 import club.zby.weixin.until.DownLoadFile;
 import lombok.extern.slf4j.Slf4j;
+import org.springframework.beans.factory.annotation.Value;
 import org.springframework.scheduling.annotation.Scheduled;
 import org.springframework.stereotype.Component;
 
@@ -20,14 +21,16 @@ public class IdeaCodeScheduled {
     private static final String DOWNLOAD_NAME = LocalDateTime.now().format(DateTimeFormatter.ofPattern("yyyy-MM-dd")) + ".zip";
     private static final String PARSING_ZIP_FILE = DOWNLOAD_PATH + "\\" + DOWNLOAD_NAME;
     private static final String DOWNLOAD_URL = "http://idea.medeming.com/a/jihuoma1.zip";
+    @Value("${deleteFile}")
+    private Boolean deleteFile;
 
     @Resource
     private DownLoadFile downLoadFile;
     private int i;
 
     @AfterSendMessages(topic = "idea激活码", isSendWeiXin = true)
-    @Scheduled(cron = "0 0 1 * * ?")
-    // 每天凌晨1点执行一次
+    @Scheduled(cron = "0 0 17 * * ?")
+    // 每天凌晨17点执行一次
     public String execute() throws IOException {
         String ideaCode = getIdeaCode();
         log.info("执行第{}次",++i);
@@ -40,7 +43,9 @@ public class IdeaCodeScheduled {
         // 解压文件 获取ideaCode
         String code = getCode(PARSING_ZIP_FILE);
         // 删除源文件
-        deleteFile(PARSING_ZIP_FILE);
+        if(deleteFile){
+            deleteFile(PARSING_ZIP_FILE);
+        }
         return code;
     }
 

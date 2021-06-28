@@ -34,3 +34,5 @@ conditional:
   # 带有@ReceiveInfo注解的方法，打印该方法的出入参到log
   logAop: true #是否开启切面注入
 
+deleteFile: false
+
