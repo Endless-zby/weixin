@@ -29,8 +29,8 @@ public class IdeaCodeScheduled {
     private int i;
 
     @AfterSendMessages(topic = "idea激活码", isSendWeiXin = true)
-    @Scheduled(cron = "0 0 17 * * ?")
-    // 每天凌晨17点执行一次
+    @Scheduled(cron = "0 0 18 * * ?")
+    // 每天18点执行一次
     public String execute() throws IOException {
         String ideaCode = getIdeaCode();
         log.info("执行第{}次",++i);
