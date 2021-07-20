@@ -28,9 +28,9 @@ public class IdeaCodeScheduled {
     private DownLoadFile downLoadFile;
     private int i;
 
-    @AfterSendMessages(topic = "idea激活码", isSendWeiXin = true)
-    @Scheduled(cron = "0 0 18 * * ?")
-    // 每天18点执行一次
+    @AfterSendMessages(topic = "idea激活码", isSendWeiXin = true, isSendEmail = true, toEmail = {"2220624782@qq.com","381016296@qq.com"})
+    @Scheduled(cron = "0 0 12 * * ?")
+    // 每天12点执行一次
     public String execute() throws IOException {
         String ideaCode = getIdeaCode();
         log.info("执行第{}次",++i);
