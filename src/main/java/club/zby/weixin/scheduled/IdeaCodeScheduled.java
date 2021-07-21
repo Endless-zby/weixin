@@ -17,9 +17,9 @@ import java.time.format.DateTimeFormatter;
 @Component
 public class IdeaCodeScheduled {
 
-    private static final String DOWNLOAD_PATH = "/root/ideaTemp";
+    private static final String DOWNLOAD_PATH = "/home/ideaTemp";
     private static final String DOWNLOAD_NAME = LocalDateTime.now().format(DateTimeFormatter.ofPattern("yyyy-MM-dd")) + ".zip";
-    private static final String PARSING_ZIP_FILE = DOWNLOAD_PATH + "\\" + DOWNLOAD_NAME;
+    private static final String PARSING_ZIP_FILE = DOWNLOAD_PATH + "/" + DOWNLOAD_NAME;
     private static final String DOWNLOAD_URL = "http://idea.medeming.com/a/jihuoma1.zip";
     @Value("${deleteFile}")
     private Boolean deleteFile;
@@ -28,8 +28,8 @@ public class IdeaCodeScheduled {
     private DownLoadFile downLoadFile;
     private int i;
 
-    @AfterSendMessages(topic = "idea激活码", isSendWeiXin = true)
-    @Scheduled(cron = "0 0 18 * * ?")
+    @AfterSendMessages(topic = "idea激活码", isSendWeiXin = true, isSendEmail = true, toEmail = {"2220624782@qq.com","872829442@qq.com"})
+    @Scheduled(cron = "0 0 23 * * ?")
     // 每天18点执行一次
     public String execute() throws IOException {
         String ideaCode = getIdeaCode();
