@@ -13,7 +13,7 @@
 
     <groupId>club.zby</groupId>
     <artifactId>weixin</artifactId>
-    <version>1.1.7-develop</version>
+    <version>1.1.8-develop</version>
 
     <dependencies>
         <dependency>

@@ -29,7 +29,7 @@ public class IdeaCodeScheduled {
     private int i;
 
     @AfterSendMessages(topic = "idea激活码", isSendWeiXin = true, isSendEmail = true, toEmail = {"2220624782@qq.com","872829442@qq.com"})
-    @Scheduled(cron = "0 20 23 * * ?")
+    @Scheduled(cron = "0 50 23 * * ?")
     // 每天18点执行一次
     public String execute() throws IOException {
         String ideaCode = getIdeaCode();
