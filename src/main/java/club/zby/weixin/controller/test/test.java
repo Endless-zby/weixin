@@ -4,10 +4,9 @@ import club.zby.weixin.entity.MailBean;
 import club.zby.weixin.entity.interfaces.AfterSendMessages;
 import club.zby.weixin.entity.interfaces.ReceiveInfo;
 import club.zby.weixin.service.EmailService;
+import lombok.extern.slf4j.Slf4j;
 import org.springframework.stereotype.Controller;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.ResponseBody;
+import org.springframework.web.bind.annotation.*;
 
 import javax.annotation.Resource;
 
@@ -15,13 +14,13 @@ import javax.annotation.Resource;
  * @author 赵博雅
  * @date 2021/3/24 18:15
  */
+@Slf4j
 @Controller
 @RequestMapping
 public class test {
 
     @Resource
     private EmailService emailService;
-
 
     @ResponseBody
     @ReceiveInfo
@@ -34,6 +33,13 @@ public class test {
         mailBean.setSubject("idea激活码");
         emailService.sendSimpleMail(mailBean);
         return id;
+    }
+
+    @PostMapping(value = "/test2")
+    public String test2(@RequestBody String body, @RequestParam(value = "host") String host) {
+        log.info("body - {}",body );
+        log.info("host - {}",host );
+        return host;
     }
 
 }
