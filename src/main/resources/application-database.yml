@@ -21,3 +21,17 @@ spring:
     show-sql: true
     hibernate:
       ddl-auto: update
+
+  mail:
+    host: smtp.qq.com
+    username: 381016296@qq.com
+    password: axdymglidbvmbiai
+
+    default-encoding: utf-8
+    properties:
+      mail:
+        smtp:
+          auth: true
+          starttls:
+            enable: false
+            required: false
