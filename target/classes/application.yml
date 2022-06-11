@@ -1,0 +1,38 @@
+spring.profiles.include: database,weixin
+server:
+  port: 10001
+
+spring:
+  application:
+    name: weixin
+
+  servlet:
+    multipart:
+      max-file-size: 10MB
+
+  mail:
+    host: smtp.qq.com
+    username: 381016296@qq.com
+    password: axdymglidbvmbiai
+
+    default-encoding: utf-8
+    properties:
+      mail:
+        smtp:
+          auth: true
+          starttls:
+            enable: false
+            required: false
+
+#设置一个邮件发送人
+lance:
+  mail:
+    sender: 381016296@qq.com
+
+
+conditional:
+  # 带有@ReceiveInfo注解的方法，打印该方法的出入参到log
+  logAop: true #是否开启切面注入
+
+deleteFile: false
+
