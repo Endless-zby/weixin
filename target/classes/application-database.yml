@@ -2,13 +2,13 @@ spring:
 
   datasource:
      driverClassName: com.mysql.jdbc.Driver
-     url: jdbc:mysql://byzhao.cn:3306/byzhao?useUnicode=true&characterEncoding=UTF-8&zeroDateTimeBehavior=convertToNull&allowMultiQueries=true&useSSL=false
+     url: jdbc:mysql://t.byzhao.cn:3306/byzhao?useUnicode=true&characterEncoding=UTF-8&zeroDateTimeBehavior=convertToNull&allowMultiQueries=true&useSSL=false
         #    url: jdbc:mysql://localhost:3306/arms?characterEncoding=utf-8
      username: byzhao
      password: zby123456
 
   redis:
-    host: byzhao.cn
+    host: t.byzhao.cn
     port: 6379
     database: 0
     password: zby123456
@@ -21,17 +21,3 @@ spring:
     show-sql: true
     hibernate:
       ddl-auto: update
-
-  mail:
-    host: smtp.qq.com
-    username: 381016296@qq.com
-    password: axdymglidbvmbiai
-
-    default-encoding: utf-8
-    properties:
-      mail:
-        smtp:
-          auth: true
-          starttls:
-            enable: false
-            required: false

@@ -10,6 +10,20 @@ spring:
     multipart:
       max-file-size: 10MB
 
+  mail:
+    host: smtp.qq.com
+    username: 381016296@qq.com
+    password: axdymglidbvmbiai
+
+    default-encoding: utf-8
+    properties:
+      mail:
+        smtp:
+          auth: true
+          starttls:
+            enable: false
+            required: false
+
 #设置一个邮件发送人
 lance:
   mail:

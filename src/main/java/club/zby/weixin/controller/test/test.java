@@ -1,39 +1,104 @@
 package club.zby.weixin.controller.test;
 
-import club.zby.weixin.entity.MailBean;
 import club.zby.weixin.entity.interfaces.AfterSendMessages;
 import club.zby.weixin.entity.interfaces.ReceiveInfo;
 import club.zby.weixin.service.EmailService;
+import lombok.extern.slf4j.Slf4j;
+import org.springframework.core.io.ByteArrayResource;
+import org.springframework.http.HttpHeaders;
+import org.springframework.http.MediaType;
+import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Controller;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.ResponseBody;
+import org.springframework.validation.annotation.Validated;
+import org.springframework.web.bind.annotation.*;
+import org.springframework.web.multipart.MultipartFile;
 
 import javax.annotation.Resource;
+import java.io.ByteArrayOutputStream;
+import java.io.InputStream;
+import java.io.UnsupportedEncodingException;
+import java.net.URL;
+import java.net.URLConnection;
+import java.util.List;
 
 /**
  * @author 赵博雅
  * @date 2021/3/24 18:15
  */
+@Slf4j
 @Controller
+@ResponseBody
 @RequestMapping
 public class test {
 
     @Resource
     private EmailService emailService;
 
-
-    @ResponseBody
     @ReceiveInfo
     @AfterSendMessages(topic = "测试")
     @GetMapping(value = "/test1")
     public String test1(String id) {
-        MailBean mailBean = new MailBean();
-        mailBean.setContent(id);
-        mailBean.setRecipient("2220624782@qq.com");
-        mailBean.setSubject("idea激活码");
-        emailService.sendSimpleMail(mailBean);
+//        MailBean mailBean = new MailBean();
+//        mailBean.setContent(id);
+//        mailBean.setRecipient("2220624782@qq.com");
+//        mailBean.setSubject("idea激活码");
+//        emailService.sendSimpleMail(mailBean);
         return id;
     }
 
+    @PostMapping(value = "/test2")
+    public String test2(@RequestPart("signInfos") ContractSignedVO contractSignedVO, @RequestPart("uploadFile") List<MultipartFile> files, @RequestParam String platformId) {
+        log.info("contractSignedVO - {}",contractSignedVO );
+        log.info("platformId - {}",platformId );
+        return platformId;
+    }
+
+    @PostMapping(value = "/test5")
+    public String test5(@Validated @RequestBody SignatureOpenAccountVO signatureOpenAccountVO) {
+//        signatureOpenAccountVO.setTrxDevcInf(JSON.toJSONString(trxDevcInf));
+        return signatureOpenAccountVO.toString();
+    }
+
+    @GetMapping("/image/pdf")
+    public ResponseEntity<org.springframework.core.io.Resource> download() throws UnsupportedEncodingException {
+
+//        return ResponseEntity.ok().header(HttpHeaders.CONTENT_DISPOSITION, "attachment;filename=" + java.net.URLEncoder.encode("合同", "UTF-8")).contentType(MediaType.APPLICATION_PDF).body(new FileSystemResource("C:\\Users\\boyazhao\\Desktop\\申论标准答题纸(横25格A4纸).pdf"));
+        return ResponseEntity.ok().header(HttpHeaders.CONTENT_DISPOSITION, "attachment;filename=" + java.net.URLEncoder.encode("合同", "UTF-8")).contentType(MediaType.APPLICATION_PDF).body(new ByteArrayResource(getByteByUrl("https://download.jinhui365.cn/group1/M00/03/E1/CgAAcmKBsnKANeDPAAImqZpOWGc278.pdf")));
+    }
+
+
+    public static void main(String[] args) throws UnsupportedEncodingException {
+        StringBuffer stringBuffer = new StringBuffer("3082046030820348a00302010202051049442479300d06092a864886f70d01010505003058310b300906035504061302434e3130302e060355040a13274368696e612046696e616e6369616c2043657274696669636174696f6e20417574686f72697479311730150603550403130e434643412054455354204f434131301e170d3232303531373033313231345a170d3237303531373033313231345a308193310b300906035504061302434e31173015060355040a130e434643412054455354204f43413131123010060355040b1309616e78696e7369676e31193017060355040b13104f7267616e697a6174696f6e616c2d31313c303a06035504030c3330353140e785a4e794b5e9a1b9e79baee6b58be8af95e4bc81e4b89a314038354634523834353646515734353631354748403130820122300d06092a864886f70d01010105000382010f003082010a0282010100a2f16119001d84acaa7379538b4799a649134a32997da2b41335053f2bb9e7a52d2fb3e7b4c46663f4e851dbfbadad9e8fcb6eb3724b8c10938498f7cf5c8521191fbb0707e4a3b85de65a09bcccded240df14f3c314ffd9caa257e9ede74af43694b05b8e9d64995b882d2f26f8e231e9479003541afd176196299c23c2c4f38f16310ec6fef836ff1bbefbf5040a1c77364c31cdc520ea6d18d6fd075db1dfeb09b218aaaff57c7ffd54e16e786bf02f542af44bf5ee514556265a86b23688d074951dd30b3ba6e1a633555df1ba1e71a6ebed9f094eac82df4856b72be88178b73afa33035137fd269345bedbf79c3a5bcd92ebddd367cbe6110544f460cf0203010001a381f43081f1301f0603551d23041830168014cf709d61eb9d7c2eb8f7cb0240f7099dfe33748030480603551d200441303f303d060860811c86ef2a01013031302f06082b060105050702011623687474703a2f2f7777772e636663612e636f6d2e636e2f75732f75732d31342e68746d30390603551d1f04323030302ea02ca02a8628687474703a2f2f7563726c2e636663612e636f6d2e636e2f5253412f63726c38343739372e63726c300b0603551d0f0404030203e8301d0603551d0e04160414e2bf8ce62d5f046fc7b4304326669b048c93a11a301d0603551d250416301406082b0601050507030206082b06010505070304300d06092a864886f70d01010505000382010100278e0a802d0be03c91c51d63a65f59119befe44cd74d4360d7cf4b6dcbcdd9b203cbbabf9368ffe30e60559f2e4241de7476767e60557b4057abe2d7935ca5f9878bda1eac72024f996ccd20cd74762e210f10db13e1b31c2fe4edc65caa02440a0fb1b4c230bfcc1e3bd8e49f3a4e410948c0e8fcdba464c8a992bf5ba92663bdc8d42fca1f0079580484212a958dd1bfe5da2506de3c49d678cbec50cff3c4a83b54fc2bfe53aa47850780c6902b545de3c557decf2e48c267ed6cdd0ebafce05dac14c9709a9225cbb6e3a8cdeff211027208350a09684b3c0d481d93a6a9e458879e3aa276cd19efd70f8cbdb829e9486499883be5444caf9f533cadbfdc");
+        String sss = "3082046030820348a00302010202051049442479300d06092a864886f70d01010505003058310b300906035504061302434e3130302e060355040a13274368696e612046696e616e6369616c2043657274696669636174696f6e20417574686f72697479311730150603550403130e434643412054455354204f434131301e170d3232303531373033313231345a170d3237303531373033313231345a308193310b300906035504061302434e31173015060355040a130e434643412054455354204f43413131123010060355040b1309616e78696e7369676e31193017060355040b13104f7267616e697a6174696f6e616c2d31313c303a06035504030c3330353140e785a4e794b5e9a1b9e79baee6b58be8af95e4bc81e4b89a314038354634523834353646515734353631354748403130820122300d06092a864886f70d01010105000382010f003082010a0282010100a2f16119001d84acaa7379538b4799a649134a32997da2b41335053f2bb9e7a52d2fb3e7b4c46663f4e851dbfbadad9e8fcb6eb3724b8c10938498f7cf5c8521191fbb0707e4a3b85de65a09bcccded240df14f3c314ffd9caa257e9ede74af43694b05b8e9d64995b882d2f26f8e231e9479003541afd176196299c23c2c4f38f16310ec6fef836ff1bbefbf5040a1c77364c31cdc520ea6d18d6fd075db1dfeb09b218aaaff57c7ffd54e16e786bf02f542af44bf5ee514556265a86b23688d074951dd30b3ba6e1a633555df1ba1e71a6ebed9f094eac82df4856b72be88178b73afa33035137fd269345bedbf79c3a5bcd92ebddd367cbe6110544f460cf0203010001a381f43081f1301f0603551d23041830168014cf709d61eb9d7c2eb8f7cb0240f7099dfe33748030480603551d200441303f303d060860811c86ef2a01013031302f06082b060105050702011623687474703a2f2f7777772e636663612e636f6d2e636e2f75732f75732d31342e68746d30390603551d1f04323030302ea02ca02a8628687474703a2f2f7563726c2e636663612e636f6d2e636e2f5253412f63726c38343739372e63726c300b0603551d0f0404030203e8301d0603551d0e04160414e2bf8ce62d5f046fc7b4304326669b048c93a11a301d0603551d250416301406082b0601050507030206082b06010505070304300d06092a864886f70d01010505000382010100278e0a802d0be03c91c51d63a65f59119befe44cd74d4360d7cf4b6dcbcdd9b203cbbabf9368ffe30e60559f2e4241de7476767e60557b4057abe2d7935ca5f9878bda1eac72024f996ccd20cd74762e210f10db13e1b31c2fe4edc65caa02440a0fb1b4c230bfcc1e3bd8e49f3a4e410948c0e8fcdba464c8a992bf5ba92663bdc8d42fca1f0079580484212a958dd1bfe5da2506de3c49d678cbec50cff3c4a83b54fc2bfe53aa47850780c6902b545de3c557decf2e48c267ed6cdd0ebafce05dac14c9709a9225cbb6e3a8cdeff211027208350a09684b3c0d481d93a6a9e458879e3aa276cd19efd70f8cbdb829e9486499883be5444caf9f533cadbfdc";
+        String sssss = "30 82 04 60 30 82 03 48 A0 03 02 01 02 02 05 10 49 44 24 79 30 0D 06 09 2A 86 48 86 F7 0D 01 01 05 05 00 30 58 31 0B 30 09 06 03 55 04 06 13 02 43 4E 31 30 30 2E 06 03 55 04 0A 13 27 43 68 69 6E 61 20 46 69 6E 61 6E 63 69 61 6C 20 43 65 72 74 69 66 69 63 61 74 69 6F 6E 20 41 75 74 68 6F 72 69 74 79 31 17 30 15 06 03 55 04 03 13 0E 43 46 43 41 20 54 45 53 54 20 4F 43 41 31 30 1E 17 0D 32 32 30 35 31 37 30 33 31 32 31 34 5A 17 0D 32 37 30 35 31 37 30 33 31 32 31 34 5A 30 81 93 31 0B 30 09 06 03 55 04 06 13 02 43 4E 31 17 30 15 06 03 55 04 0A 13 0E 43 46 43 41 20 54 45 53 54 20 4F 43 41 31 31 12 30 10 06 03 55 04 0B 13 09 61 6E 78 69 6E 73 69 67 6E 31 19 30 17 06 03 55 04 0B 13 10 4F 72 67 61 6E 69 7A 61 74 69 6F 6E 61 6C 2D 31 31 3C 30 3A 06 03 55 04 03 0C 33 30 35 31 40 E7 85 A4 E7 94 B5 E9 A1 B9 E7 9B AE E6 B5 8B E8 AF 95 E4 BC 81 E4 B8 9A 31 40 38 35 46 34 52 38 34 35 36 46 51 57 34 35 36 31 35 47 48 40 31 30 82 01 22 30 0D 06 09 2A 86 48 86 F7 0D 01 01 01 05 00 03 82 01 0F 00 30 82 01 0A 02 82 01 01 00 A2 F1 61 19 00 1D 84 AC AA 73 79 53 8B 47 99 A6 49 13 4A 32 99 7D A2 B4 13 35 05 3F 2B B9 E7 A5 2D 2F B3 E7 B4 C4 66 63 F4 E8 51 DB FB AD AD 9E 8F CB 6E B3 72 4B 8C 10 93 84 98 F7 CF 5C 85 21 19 1F BB 07 07 E4 A3 B8 5D E6 5A 09 BC CC DE D2 40 DF 14 F3 C3 14 FF D9 CA A2 57 E9 ED E7 4A F4 36 94 B0 5B 8E 9D 64 99 5B 88 2D 2F 26 F8 E2 31 E9 47 90 03 54 1A FD 17 61 96 29 9C 23 C2 C4 F3 8F 16 31 0E C6 FE F8 36 FF 1B BE FB F5 04 0A 1C 77 36 4C 31 CD C5 20 EA 6D 18 D6 FD 07 5D B1 DF EB 09 B2 18 AA AF F5 7C 7F FD 54 E1 6E 78 6B F0 2F 54 2A F4 4B F5 EE 51 45 56 26 5A 86 B2 36 88 D0 74 95 1D D3 0B 3B A6 E1 A6 33 55 5D F1 BA 1E 71 A6 EB ED 9F 09 4E AC 82 DF 48 56 B7 2B E8 81 78 B7 3A FA 33 03 51 37 FD 26 93 45 BE DB F7 9C 3A 5B CD 92 EB DD D3 67 CB E6 11 05 44 F4 60 CF 02 03 01 00 01 A3 81 F4 30 81 F1 30 1F 06 03 55 1D 23 04 18 30 16 80 14 CF 70 9D 61 EB 9D 7C 2E B8 F7 CB 02 40 F7 09 9D FE 33 74 80 30 48 06 03 55 1D 20 04 41 30 3F 30 3D 06 08 60 81 1C 86 EF 2A 01 01 30 31 30 2F 06 08 2B 06 01 05 05 07 02 01 16 23 68 74 74 70 3A 2F 2F 77 77 77 2E 63 66 63 61 2E 63 6F 6D 2E 63 6E 2F 75 73 2F 75 73 2D 31 34 2E 68 74 6D 30 39 06 03 55 1D 1F 04 32 30 30 30 2E A0 2C A0 2A 86 28 68 74 74 70 3A 2F 2F 75 63 72 6C 2E 63 66 63 61 2E 63 6F 6D 2E 63 6E 2F 52 53 41 2F 63 72 6C 38 34 37 39 37 2E 63 72 6C 30 0B 06 03 55 1D 0F 04 04 03 02 03 E8 30 1D 06 03 55 1D 0E 04 16 04 14 E2 BF 8C E6 2D 5F 04 6F C7 B4 30 43 26 66 9B 04 8C 93 A1 1A 30 1D 06 03 55 1D 25 04 16 30 14 06 08 2B 06 01 05 05 07 03 02 06 08 2B 06 01 05 05 07 03 04 30 0D 06 09 2A 86 48 86 F7 0D 01 01 05 05 00 03 82 01 01 00 27 8E 0A 80 2D 0B E0 3C 91 C5 1D 63 A6 5F 59 11 9B EF E4 4C D7 4D 43 60 D7 CF 4B 6D CB CD D9 B2 03 CB BA BF 93 68 FF E3 0E 60 55 9F 2E 42 41 DE 74 76 76 7E 60 55 7B 40 57 AB E2 D7 93 5C A5 F9 87 8B DA 1E AC 72 02 4F 99 6C CD 20 CD 74 76 2E 21 0F 10 DB 13 E1 B3 1C 2F E4 ED C6 5C AA 02 44 0A 0F B1 B4 C2 30 BF CC 1E 3B D8 E4 9F 3A 4E 41 09 48 C0 E8 FC DB A4 64 C8 A9 92 BF 5B A9 26 63 BD C8 D4 2F CA 1F 00 79 58 04 84 21 2A 95 8D D1 BF E5 DA 25 06 DE 3C 49 D6 78 CB EC 50 CF F3 C4 A8 3B 54 FC 2B FE 53 AA 47 85 07 80 C6 90 2B 54 5D E3 C5 57 DE CF 2E 48 C2 67 ED 6C DD 0E BA FC E0 5D AC 14 C9 70 9A 92 25 CB B6 E3 A8 CD EF F2 11 02 72 08 35 0A 09 68 4B 3C 0D 48 1D 93 A6 A9 E4 58 87 9E 3A A2 76 CD 19 EF D7 0F 8C BD B8 29 E9 48 64 99 88 3B E5 44 4C AF 9F 53 3C AD BF DC";
+
+        int length1 = sss.getBytes().length;
+        int length = sss.length();
+
+        System.out.println(sss);
+        System.out.println("Write Everywhere,Read Nowhere");
+        System.out.println(sssss.toLowerCase().replace(" ",""));
+
+    }
+
+    public static byte[] getByteByUrl(String url){
+        URL urlConet;
+        try {
+            urlConet = new URL(url);
+            URLConnection con = urlConet.openConnection();
+            InputStream in = con.getInputStream();
+            byte[] buffer = new byte[20 * 1024];
+            // 20M应该够了
+            int n = 0;
+            ByteArrayOutputStream out = new ByteArrayOutputStream();
+            while ((n = in.read(buffer)) != -1) {
+                out.write(buffer, 0, n);
+            }
+            return out.toByteArray();
+        } catch (Exception e) {
+            log.error("getByteByUrl error : {}",e);
+            e.printStackTrace();
+            return null;
+        }
+    }
 }
