@@ -12,7 +12,7 @@ import java.time.LocalDateTime;
 
 @Slf4j
 @EnableAsync
-@EnableScheduling
+//@EnableScheduling
 @SpringBootApplication
 public class weiChatApplication extends WebMvcConfigurationSupport {
 
