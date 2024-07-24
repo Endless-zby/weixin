@@ -11,13 +11,8 @@ import com.eatthepath.pushy.apns.util.SimpleApnsPushNotification;
 import com.eatthepath.pushy.apns.util.TokenUtil;
 import com.eatthepath.pushy.apns.util.concurrent.PushNotificationFuture;
 import lombok.extern.slf4j.Slf4j;
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.core.io.ClassPathResource;
 import org.springframework.stereotype.Component;
-
-import javax.annotation.Resource;
-import java.io.File;
-import java.util.concurrent.ExecutionException;
 
 /**
  * IOS消息推送
@@ -30,13 +25,13 @@ public class APNsServiceImpl implements MessageSendService {
 //
 //    static {
 //        try {
-//            apnsClient = new ApnsClientBuilder()
+//            ApnsClient apnsClient = new ApnsClientBuilder()
 //                    .setApnsServer(ApnsClientBuilder.PRODUCTION_APNS_HOST)
-//                    .setSigningKey(ApnsSigningKey.loadFromPkcs8File(new ClassPathResource("AuthKey_LH4T9V5U4R_5U8LBRXG3A.p8").getFile(),
+//                    .setSigningKey(ApnsSigningKey.loadFromInputStream(new ClassPathResource("AuthKey_LH4T9V5U4R_5U8LBRXG3A.p8").getInputStream(),
 //                            "5U8LBRXG3A", "LH4T9V5U4R"))
 //                    .build();
-//        }catch (Exception e){
-//            log.error("init apnsClient error",e);
+//        } catch (Exception e) {
+//            log.error("init apnsClient error", e);
 //            log.error("IOS APNs推送初始化失败！ APNs不可用！");
 //        }
 //
@@ -49,10 +44,9 @@ public class APNsServiceImpl implements MessageSendService {
         try {
             ApnsClient apnsClient = new ApnsClientBuilder()
                     .setApnsServer(ApnsClientBuilder.PRODUCTION_APNS_HOST)
-                    .setSigningKey(ApnsSigningKey.loadFromPkcs8File(new ClassPathResource("AuthKey_LH4T9V5U4R_5U8LBRXG3A.p8").getFile(),
+                    .setSigningKey(ApnsSigningKey.loadFromInputStream(new ClassPathResource("AuthKey_LH4T9V5U4R_5U8LBRXG3A.p8").getInputStream(),
                             "5U8LBRXG3A", "LH4T9V5U4R"))
                     .build();
-
 
 
             final ApnsPayloadBuilder payloadBuilder = new SimpleApnsPayloadBuilder();
