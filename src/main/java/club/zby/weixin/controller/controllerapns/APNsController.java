@@ -17,8 +17,8 @@ public class APNsController {
 
     @ResponseBody
     @GetMapping(value = "/send")
-    public WeiChatRespones<Object> create(@RequestParam(defaultValue = "Example!") String message, @RequestParam(defaultValue = "8a5c16959ae103b643bfe32c4af80b3b1d55f07f732f5ee600a67a6cf53d9aab") String token) throws Exception {
-        messageSendService.send(message, token);
+    public WeiChatRespones<Object> create(@RequestParam(defaultValue = "title") String title, @RequestParam(defaultValue = "Example!") String message, @RequestParam(defaultValue = "8a5c16959ae103b643bfe32c4af80b3b1d55f07f732f5ee600a67a6cf53d9aab") String token) throws Exception {
+        messageSendService.send(title, message, token);
         return WeiChatRespones.isSuccess();
     }
 }
