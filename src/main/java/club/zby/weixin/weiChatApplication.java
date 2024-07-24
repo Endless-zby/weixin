@@ -25,21 +25,21 @@ import java.util.concurrent.CountDownLatch;
 @SpringBootApplication
 public class weiChatApplication extends WebMvcConfigurationSupport {
 
-//    @Bean
-//    public ApnsClient apnsClient() {
-//        try {
-//            return new ApnsClientBuilder()
-//                    .setApnsServer(ApnsClientBuilder.DEVELOPMENT_APNS_HOST)
-//                    .setSigningKey(ApnsSigningKey.loadFromPkcs8File(new ClassPathResource("AuthKey_LH4T9V5U4R_5U8LBRXG3A.p8").getFile(),
-//                            "5U8LBRXG3A", "LH4T9V5U4R"))
-//                    .setMetricsListener(new MyCustomMetricsListener())  // 搞个监听器 收集指标信息
-//                    .build();
-//        }catch (Exception e){
-//            log.error("weiChatApplication init APNs error",e);
-//        }
-//        log.error("IOS APNs推送初始化失败！ APNs不可用！");
-//        return null;
-//    }
+    @Bean
+    public ApnsClient apnsClient() {
+        try {
+            return new ApnsClientBuilder()
+                    .setApnsServer(ApnsClientBuilder.PRODUCTION_APNS_HOST)
+                    .setSigningKey(ApnsSigningKey.loadFromInputStream(new ClassPathResource("AuthKey_LH4T9V5U4R_5U8LBRXG3A.p8").getInputStream(),
+                            "5U8LBRXG3A", "LH4T9V5U4R"))
+                    .setMetricsListener(new MyCustomMetricsListener())  // 监听器 统计指标用
+                    .build();
+        }catch (Exception e){
+            log.error("weiChatApplication init APNs error",e);
+        }
+        log.error("IOS APNs推送初始化失败！ APNs不可用！");
+        return null;
+    }
 
     public static void main(String[] args) {
         ConfigurableApplicationContext run = SpringApplication.run(weiChatApplication.class, args);

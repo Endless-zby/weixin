@@ -15,6 +15,8 @@ import lombok.extern.slf4j.Slf4j;
 import org.springframework.core.io.ClassPathResource;
 import org.springframework.stereotype.Component;
 
+import javax.annotation.Resource;
+
 /**
  * IOS消息推送
  */
@@ -22,22 +24,24 @@ import org.springframework.stereotype.Component;
 @Component
 public class APNsServiceImpl implements MessageSendService {
 
-    static ApnsClient apnsClient;
+    @Resource
+    private ApnsClient apnsClient;
 
-    static {
-        try {
-            apnsClient = new ApnsClientBuilder()
-                    .setApnsServer(ApnsClientBuilder.PRODUCTION_APNS_HOST)
-                    .setSigningKey(ApnsSigningKey.loadFromInputStream(new ClassPathResource("AuthKey_LH4T9V5U4R_5U8LBRXG3A.p8").getInputStream(),
-                            "5U8LBRXG3A", "LH4T9V5U4R"))
-                    .setMetricsListener(new MyCustomMetricsListener())  // 监听器 统计指标用
-                    .build();
-        } catch (Exception e) {
-            log.error("init apnsClient error", e);
-            log.error("IOS APNs推送初始化失败！ APNs不可用！");
-        }
-
-    }
+//    static ApnsClient apnsClient;
+//
+//    static {
+//        try {
+//            apnsClient = new ApnsClientBuilder()
+//                    .setApnsServer(ApnsClientBuilder.PRODUCTION_APNS_HOST)
+//                    .setSigningKey(ApnsSigningKey.loadFromInputStream(new ClassPathResource("AuthKey_LH4T9V5U4R_5U8LBRXG3A.p8").getInputStream(),
+//                            "5U8LBRXG3A", "LH4T9V5U4R"))
+//                    .setMetricsListener(new MyCustomMetricsListener())  // 监听器 统计指标用
+//                    .build();
+//        } catch (Exception e) {
+//            log.error("init apnsClient error", e);
+//            log.error("IOS APNs推送初始化失败！ APNs不可用！");
+//        }
+//    }
 
     @Override
     public void send(String title, String message, String clientToken) {
