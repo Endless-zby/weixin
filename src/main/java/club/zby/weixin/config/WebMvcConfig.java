@@ -25,10 +25,12 @@ public class WebMvcConfig extends WebMvcConfigurationSupport {
 
 
     public void addInterceptors(InterceptorRegistry registry) {
-        registry.addInterceptor(accessTokenInterceptor);
+        registry.addInterceptor(accessTokenInterceptor)
+                 .excludePathPatterns("/apns");
 
         registry.addInterceptor(dealWithReceiveInterceptor)
-                .addPathPatterns("/receive");
+                .addPathPatterns("/receive")
+                .excludePathPatterns("/apns");
 
 
         super.addInterceptors(registry);

@@ -1,6 +1,6 @@
 spring.profiles.include: database,weixin
 server:
-  port: 10001
+  port: 10002
 
 spring:
   application:

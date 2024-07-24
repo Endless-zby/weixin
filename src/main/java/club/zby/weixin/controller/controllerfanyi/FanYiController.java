@@ -6,6 +6,7 @@ import club.zby.weixin.entity.MenuButton;
 import club.zby.weixin.entity.MenuTemplate;
 import club.zby.weixin.service.FanYiService;
 import com.alibaba.fastjson.JSONObject;
+import org.springframework.http.MediaType;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.*;
 
@@ -13,14 +14,14 @@ import javax.annotation.Resource;
 import java.util.ArrayList;
 
 @Controller
-@RequestMapping
+@RequestMapping("/fanyi")
 public class FanYiController {
 
     @Resource
     private FanYiService fanYiService;
 
     @ResponseBody
-    @PostMapping("create")
+    @PostMapping(value = "/tencentTmt", consumes = MediaType.APPLICATION_JSON_VALUE)
     public String create(@RequestBody FanYiRequest fanYiRequest) throws Exception {
         String result = fanYiService.textTranslate(fanYiRequest.getSourceText(), fanYiRequest.getSource(), fanYiRequest.getTarget());
         return result;

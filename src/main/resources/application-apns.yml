@@ -1,0 +1,4 @@
+apnsConfig:
+  pkcs8File: AuthKey_LH4T9V5U4R_5U8LBRXG3A.p8
+  teamId: 5U8LBRXG3A
+  keyId:  LH4T9V5U4R

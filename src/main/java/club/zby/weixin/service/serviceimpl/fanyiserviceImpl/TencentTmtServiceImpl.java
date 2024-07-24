@@ -24,12 +24,13 @@ public class TencentTmtServiceImpl implements FanYiService {
         ClientProfile clientProfile = new ClientProfile();
         clientProfile.setHttpProfile(httpProfile);
         // 实例化要请求产品的client对象,clientProfile是可选的
-        TmtClient client = new TmtClient(cred, "", clientProfile);
+        TmtClient client = new TmtClient(cred, "ap-beijing", clientProfile);
         // 实例化一个请求对象,每个接口都会对应一个request对象
         TextTranslateRequest req = new TextTranslateRequest();
         req.setSourceText(sourceText);
         req.setSource(source);
         req.setTarget(target);
+        req.setProjectId(1305406L);
         // 返回的resp是一个TextTranslateResponse的实例，与请求对象对应
         TextTranslateResponse resp = client.TextTranslate(req);
         // 输出json格式的字符串回包
