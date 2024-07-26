@@ -2,13 +2,13 @@ spring:
 
   datasource:
      driverClassName: com.mysql.cj.jdbc.Driver
-     url: jdbc:mysql://192.168.123.36:3306/byzhao?useUnicode=true&characterEncoding=UTF-8&zeroDateTimeBehavior=convertToNull&allowMultiQueries=true&allowPublicKeyRetrieval=true
+     url: jdbc:mysql://192.168.192.36:3306/byzhao?useUnicode=true&characterEncoding=UTF-8&zeroDateTimeBehavior=convertToNull&allowMultiQueries=true&allowPublicKeyRetrieval=true
         #    url: jdbc:mysql://localhost:3306/arms?characterEncoding=utf-8
      username: byzhao
      password: zby123456
 
   redis:
-    host: 192.168.123.36
+    host: 192.168.192.36
     port: 6379
     database: 0
     password: zby123456
